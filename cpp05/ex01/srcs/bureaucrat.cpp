@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/23 18:09:09 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/23 18:42:59 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int Bureaucrat::getgrade() const
 
 void Bureaucrat::signForm(Form &F)
 {
+	if((void *)&F == NULL || (void *)this == NULL)
+		return ;
 	if(!F.is_signed())
 	{
 		F.beSigned(*this);

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/23 16:00:28 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/23 18:40:37 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int Form::get_grade_sign_req() const
 
 void Form::beSigned(Bureaucrat &boss)
 {
+	if((void *)&boss == NULL)
+		return ;
 	try
 	{
 		if (this->grade_sign_req >= boss.getgrade())
