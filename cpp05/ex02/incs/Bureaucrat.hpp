@@ -6,15 +6,17 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:19:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 15:35:53 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/24 18:21:46 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUREAUCRAFT_HPP
-# define BUREAUCRAFT_HPP
+#ifndef BUREAUCRAT_HPP
+# define BUREAUCRAT_HPP
 
 # include <iostream>
 # include <stdexcept>
+
+class AForm;
 
 class Bureaucrat
 {
@@ -30,8 +32,8 @@ class Bureaucrat
 	void gradeincrement();
 	void gradedecrement();
 	std::string getname() const;
-	int getgrade() const; 
-
+	int getgrade() const;
+	void signForm(AForm &F);
 	class GradeTooHighException : public std::exception
 	{
 		public:

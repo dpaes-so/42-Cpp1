@@ -6,15 +6,16 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 18:15:03 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/24 18:22:06 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Bureaucrat.hpp"
+#include "../incs/AForm.hpp"
 
 Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 {
-	std::cout << "Default construcopr" << std::endl;
+	std::cout << "Default constructor" << std::endl;
 	if (sgrade > 150)
 		throw GradeTooLowException();
 	if (sgrade < 1)
@@ -35,6 +36,7 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 {
 	return ("Too Low!");
 }
+
 
 void Bureaucrat::gradeincrement()
 {
@@ -84,6 +86,24 @@ int Bureaucrat::getgrade() const
 	if((void *)this == NULL)
 		return (0);
 	return (this->grade);
+}
+
+void Bureaucrat::signForm(AForm &F)
+{
+	if((void *)&F == NULL || (void *)this == NULL)
+		return ;
+	if(!F.is_signed())
+	{
+		F.beSigned(*this);
+		if(F.is_signed())
+			std::cout << this->getname() << " signed " << F.getname() << std::endl;
+		else
+			std::cout << this->getname() << " couldn’t sign " << F.getname() << " because " << "grade is too low!" << std::endl;
+	}
+	else
+	{
+		std::cout << this->getname() << " couldn’t sign " << F.getname() << " because " << "its alredy signed!"<< std::endl;
+	}
 }
 
 std::ostream &operator<<(std::ostream &stream, Bureaucrat const &bure)

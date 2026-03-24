@@ -6,15 +6,15 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 18:15:32 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/24 18:20:35 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../incs/Bureaucrat.hpp"
-#include "../incs/Form.hpp"
+#include "../incs/AForm.hpp"
 
-Form::Form(const std::string sname, int sgrade_sign_req,
+AForm::AForm(const std::string sname, int sgrade_sign_req,
 	int sgrade_exec_req) : name(sname), grade_sign_req(sgrade_sign_req), grade_exec_req(sgrade_exec_req)
 {
     this->sign = false;
@@ -24,50 +24,50 @@ Form::Form(const std::string sname, int sgrade_sign_req,
 		throw GradeTooHighException();
 	std::cout << "Default Form constructor" << std::endl;
 }
-Form::~Form()
+AForm::~AForm()
 {
 	std::cout << "Default Form destrcutor" << std::endl;
 }
 
-const char *Form::GradeTooHighException::what() const throw()
+const char *AForm::GradeTooHighException::what() const throw()
 {
 	return ("Too High!(Form)");
 }
 
-const char *Form::GradeTooLowException::what() const throw()
+const char *AForm::GradeTooLowException::what() const throw()
 {
 	return ("Too Low!(Form)");
 }
 
-std::string Form::getname() const
+std::string AForm::getname() const
 {
 	if((void *)this == NULL)
 		return (NULL);
 	return (this->name);
 }
 
-bool Form::is_signed() const
+bool AForm::is_signed() const
 {
 	if((void *)this == NULL)
 		return (false);
 	return (this->sign);
 }
 
-int Form::get_grade_exec_req() const
+int AForm::get_grade_exec_req() const
 {
 	if((void *)this == NULL)
 		return (0);
 	return (this->grade_exec_req);
 }
 
-int Form::get_grade_sign_req() const
+int AForm::get_grade_sign_req() const
 {
 	if((void *)this == NULL)
 		return (0);
 	return (this->grade_sign_req);
 }
 
-void Form::beSigned(Bureaucrat &boss)
+void AForm::beSigned(Bureaucrat &boss)
 {
 	if((void *)&boss == NULL)
 		return ;
@@ -85,7 +85,7 @@ void Form::beSigned(Bureaucrat &boss)
 		std::cerr << e.what() << '\n';
 	}
 }
-std::ostream &operator<<(std::ostream &stream, Form const &F)
+std::ostream &operator<<(std::ostream &stream, AForm const &F)
 {
 	if((void *)&F == NULL)
 		return(stream);

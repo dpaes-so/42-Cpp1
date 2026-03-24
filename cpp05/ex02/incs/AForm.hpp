@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:19:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 15:35:53 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/24 18:18:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUREAUCRAFT_HPP
-# define BUREAUCRAFT_HPP
+#ifndef AFORM_HPP
+# define AFORM_HPP
 
 # include <iostream>
 # include <stdexcept>
 
-class Bureaucrat
+class Bureaucrat;
+
+class AForm
 {
   private:
 	const std::string name;
-	int grade;
+	bool sign;
+	const int grade_sign_req;
+	const int grade_exec_req;
 
   public:
-	Bureaucrat(const std::string name, int grade);
-	~Bureaucrat();
-	Bureaucrat &operator=(Bureaucrat const &source);
-	Bureaucrat(Bureaucrat const &source);
-	void gradeincrement();
-	void gradedecrement();
+	AForm(const std::string sname, int sgrade_sign_req, int grade_exec_req);
+	~AForm();
+	AForm &operator=(AForm const &source);
+	AForm(AForm const &source);
 	std::string getname() const;
-	int getgrade() const; 
+	bool is_signed() const;
+	int get_grade_exec_req() const;
+	int get_grade_sign_req() const;
+	void beSigned(Bureaucrat &boss);
 
 	class GradeTooHighException : public std::exception
 	{
@@ -45,5 +50,5 @@ class Bureaucrat
 	};
 };
 
-std::ostream &operator<<(std::ostream &stream, const Bureaucrat &bure);
+std::ostream &operator<<(std::ostream &stream, const AForm &bure);
 #endif
