@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 18:15:32 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:57:37 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ Form::Form(const std::string sname, int sgrade_sign_req,
 Form::~Form()
 {
 	std::cout << "Default Form destrcutor" << std::endl;
+}
+
+Form::Form(Form const &source) : 
+	name(source.getname()) ,grade_sign_req(source.get_grade_sign_req()), grade_exec_req(source.get_grade_exec_req())
+{
+	std::cout << "Copy constructor" << std::endl;
+	this->sign = source.sign;
 }
 
 const char *Form::GradeTooHighException::what() const throw()
@@ -92,4 +99,17 @@ std::ostream &operator<<(std::ostream &stream, Form const &F)
 	stream << "Form name:" << F.getname() << "\nIs signed:" << F.is_signed() << std::endl;
 	stream << "Grade required to sign:" << F.get_grade_sign_req() << "\nGrade required to exec" << F.get_grade_exec_req();
 	return (stream);
+}
+
+Form &Form::operator=(Form const &source)
+{
+	if((void *)&source == NULL || (void *)this == NULL)
+		return (*this);
+	std::cout << "Copy assignment operator" << std::endl;
+	if (this != &source)
+	{
+		std::cout << "wtv am i here\n";
+		this->sign = source.sign;
+	}
+	return (*this);
 }

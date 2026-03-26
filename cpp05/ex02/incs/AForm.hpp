@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:19:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 18:18:25 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:26:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 # include <stdexcept>
 
-class Bureaucrat;
+class	Bureaucrat;
 
 class AForm
 {
@@ -26,9 +26,11 @@ class AForm
 	const int grade_sign_req;
 	const int grade_exec_req;
 
+  protected:
+	std::string target;
   public:
 	AForm(const std::string sname, int sgrade_sign_req, int grade_exec_req);
-	~AForm();
+	virtual ~AForm();
 	AForm &operator=(AForm const &source);
 	AForm(AForm const &source);
 	std::string getname() const;
@@ -36,6 +38,7 @@ class AForm
 	int get_grade_exec_req() const;
 	int get_grade_sign_req() const;
 	void beSigned(Bureaucrat &boss);
+	virtual void execute(Bureaucrat const &executor) const = 0;
 
 	class GradeTooHighException : public std::exception
 	{

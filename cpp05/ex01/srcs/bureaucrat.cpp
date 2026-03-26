@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 18:15:08 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:54:06 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ Bureaucrat::~Bureaucrat()
 	std::cout << "Default destrcutor" << std::endl;
 }
 
+Bureaucrat::Bureaucrat(Bureaucrat const &source) : name(source.getname())
+{
+	std::cout << "Copy constructor" << std::endl;
+	this->grade = source.getgrade();
+	
+}
 const char *Bureaucrat::GradeTooHighException::what() const throw()
 {
 	return ("Too High!");

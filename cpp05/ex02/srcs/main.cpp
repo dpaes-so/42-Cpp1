@@ -6,22 +6,25 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:18:43 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 18:21:16 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:23:31 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Bureaucrat.hpp"
 #include "../incs/AForm.hpp"
+#include "../incs/ShrubberyCreationForm.hpp"
 
-
-AForm *create_Form(std::string name,int rsign,int rexec)
+AForm *create_Form(int lvl)
 {
     AForm *f;
     
     try
     {
-        f = new AForm(name,rsign,rexec);
-        return(f);
+        if(lvl == 1)
+        {
+            f = new ShrubberyCreationForm("bananas");
+            return(f);
+        }
     }
     catch(const std::exception& e)
     {
@@ -48,7 +51,7 @@ int main()
 {
     Bureaucrat *daniel;
     AForm *F;
-    F = create_Form("Form",145,2);
+    F = create_Form(1);
     daniel = create_Bureaucrat("daniel",150);
     std::cout << *daniel << std::endl;
     daniel->signForm(*F);

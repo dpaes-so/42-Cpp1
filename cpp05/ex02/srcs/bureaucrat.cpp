@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 18:22:06 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:29:27 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 {
-	std::cout << "Default constructor" << std::endl;
+	std::cout << "Bureaucrat constructor" << std::endl;
 	if (sgrade > 150)
 		throw GradeTooLowException();
 	if (sgrade < 1)
@@ -24,7 +24,14 @@ Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 }
 Bureaucrat::~Bureaucrat()
 {
-	std::cout << "Default destrcutor" << std::endl;
+	std::cout << "Bureaucrat destrcutor" << std::endl;
+}
+
+Bureaucrat::Bureaucrat(Bureaucrat const &source) : name(source.getname())
+{
+	std::cout << "Bureaucrat Copy constructor" << std::endl;
+	this->grade = source.getgrade();
+	
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw()
@@ -118,10 +125,9 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &source)
 {
 	if((void *)&source == NULL || (void *)this == NULL)
 		return (*this);
-	std::cout << "Copy assignment operator" << std::endl;
+	std::cout << "Bureaucrat Copy assignment operator" << std::endl;
 	if (this != &source)
 	{
-		std::cout << "wtv am i here\n";
 		this->grade = source.getgrade();
 	}
 	return (*this);
