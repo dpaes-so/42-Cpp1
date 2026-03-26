@@ -6,13 +6,19 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 15:29:51 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:05:39 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../incs/Bureaucrat.hpp"
 #include "../incs/AForm.hpp"
+
+AForm::AForm(void) : name("default") , grade_sign_req(150), grade_exec_req(150)
+{
+	std::cout << "AForm default construcopr" << std::endl;
+    this->sign = false;
+}
 
 AForm::AForm(const std::string sname, int sgrade_sign_req,int sgrade_exec_req) : 
 	name(sname), grade_sign_req(sgrade_sign_req), grade_exec_req(sgrade_exec_req)

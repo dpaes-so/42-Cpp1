@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:19:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 15:26:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:06:10 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class AForm
   protected:
 	std::string target;
   public:
+	AForm();
 	AForm(const std::string sname, int sgrade_sign_req, int grade_exec_req);
 	virtual ~AForm();
 	AForm &operator=(AForm const &source);

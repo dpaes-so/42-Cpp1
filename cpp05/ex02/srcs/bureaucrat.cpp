@@ -6,12 +6,18 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 15:29:27 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:15:10 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Bureaucrat.hpp"
 #include "../incs/AForm.hpp"
+
+Bureaucrat::Bureaucrat(void) : name("default")
+{
+	std::cout << "default Bureaucrat constructor" << std::endl;
+	this->grade = 150;
+}
 
 Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 {
@@ -110,6 +116,21 @@ void Bureaucrat::signForm(AForm &F)
 	else
 	{
 		std::cout << this->getname() << " couldn’t sign " << F.getname() << " because " << "its alredy signed!"<< std::endl;
+	}
+}
+
+void Bureaucrat::executeForm(AForm const & form) const
+{
+	if((void *)&form == NULL || (void *)this == NULL)
+		return ;
+	if(form.is_signed())
+	{
+		form.execute(*this);
+		std::co
+	}
+	else
+	{
+		std::cout << this->getname() << " couldn’t execute " << form.getname() << " because " << "its not signed!"<< std::endl;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 15:28:55 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:08:50 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include "../incs/Bureaucrat.hpp"
 #include "../incs/AForm.hpp"
 #include "../incs/ShrubberyCreationForm.hpp"
+
+
+ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm_default",145,137)
+{
+	this->target = target;
+	std::cout << "default ShrubberyCreationForm Form constructor" << std::endl;
+}
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm",145,137)
 {
@@ -37,7 +44,6 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 	std::cout << "laranjas" << std::endl;
 }
 
-	
 std::ostream &operator<<(std::ostream &stream, ShrubberyCreationForm const &F)
 {
 	if((void *)&F == NULL)
