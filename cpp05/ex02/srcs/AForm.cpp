@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 17:05:39 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:33:09 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ const char *AForm::GradeTooLowException::what() const throw()
 {
 	return ("Too Low!(Form)");
 }
-
+const char *AForm::AlreadySignedException::what() const throw()
+{
+	return ("Already Signed!(form)");
+}
 std::string AForm::getname() const
 {
 	if((void *)this == NULL)
@@ -102,8 +105,8 @@ std::ostream &operator<<(std::ostream &stream, AForm const &F)
 {
 	if((void *)&F == NULL)
 		return(stream);
-	stream << "Form name:" << F.getname() << "\nIs signed:" << F.is_signed() << std::endl;
-	stream << "Grade required to sign:" << F.get_grade_sign_req() << "\nGrade required to exec" << F.get_grade_exec_req();
+	stream << "Form information:" << std::endl  << " -Form name:" << F.getname() << "\n -Is signed:" << F.is_signed() << std::endl;
+	stream << " -Grade required to sign:" << F.get_grade_sign_req() << "\n -Grade required to exec:" << F.get_grade_exec_req() << std::endl;
 	return (stream);
 }
 

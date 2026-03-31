@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:19:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/23 15:59:32 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 16:11:45 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class Form
 	const int grade_exec_req;
 
   public:
+	Form();
 	Form(const std::string sname, int sgrade_sign_req, int grade_exec_req);
 	~Form();
 	Form &operator=(Form const &source);

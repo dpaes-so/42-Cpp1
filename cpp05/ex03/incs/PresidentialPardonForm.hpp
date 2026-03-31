@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
+/*   PresidentialPardonForm.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHRUBBERRYCREATIONFORM_HPP
-# define SHRUBBERRYCREATIONFORM_HPP
+#ifndef PRESIDENTIALPARDONFORM_HPP
+# define PRESIDENTIALPARDONFORM_HPP
 
 # include <iostream>
 # include <fstream>
@@ -20,16 +20,16 @@
 
 class Bureaucrat;
 
-class ShrubberyCreationForm : public AForm
+class PresidentialPardonForm : public AForm
 {
   	public:
-  		ShrubberyCreationForm();
-		ShrubberyCreationForm(std::string target);
-		~ShrubberyCreationForm();
-		ShrubberyCreationForm &operator=(ShrubberyCreationForm const &source);
-		ShrubberyCreationForm(ShrubberyCreationForm const &source);
+  		PresidentialPardonForm();
+		PresidentialPardonForm(std::string target);
+		~PresidentialPardonForm();
+		PresidentialPardonForm &operator=(PresidentialPardonForm const &source);
+		PresidentialPardonForm(PresidentialPardonForm const &source);
 		void execute(Bureaucrat const & executor) const;
 };
 
-std::ostream &operator<<(std::ostream &stream, const ShrubberyCreationForm &bure);
+std::ostream &operator<<(std::ostream &stream, const PresidentialPardonForm &bure);
 #endif

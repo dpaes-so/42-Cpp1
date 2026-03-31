@@ -6,29 +6,36 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 14:53:56 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:04:06 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Bureaucrat.hpp"
 
+Bureaucrat::Bureaucrat(void) : name("default")
+{
+	std::cout << "Default Bureaucrat construcopr" << std::endl;
+	this->grade = 150;
+}
+
 Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 {
-	std::cout << "Default construcopr" << std::endl;
+	std::cout << "Bureaucrat construcopr" << std::endl;
 	if (sgrade > 150)
 		throw GradeTooLowException();
 	if (sgrade < 1)
 		throw GradeTooHighException();
 	this->grade = sgrade;
 }
+
 Bureaucrat::~Bureaucrat()
 {
-	std::cout << "Default destrcutor" << std::endl;
+	std::cout << "Bureaucrat destrcutor" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &source) : name(source.getname())
 {
-	std::cout << "Copy constructor" << std::endl;
+	std::cout << "Bureaucrat Copy constructor" << std::endl;
 	this->grade = source.getgrade();
 	
 }
@@ -105,7 +112,7 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &source)
 {
 	if((void *)&source == NULL || (void *)this == NULL)
 		return (*this);
-	std::cout << "Copy assignment operator" << std::endl;
+	std::cout << "Bureaucrat Copy assignment operator" << std::endl;
 	if (this != &source)
 	{
 		std::cout << "wtv am i here\n";

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:19:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/23 17:55:05 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:35:35 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,33 @@
 class Form;
 
 class Bureaucrat
-{
-  private:
-	const std::string name;
-	int grade;
+{	
+	private:
+		const std::string name;
+		int grade;
 
-  public:
-	Bureaucrat(const std::string name, int grade);
-	~Bureaucrat();
-	Bureaucrat &operator=(Bureaucrat const &source);
-	Bureaucrat(Bureaucrat const &source);
-	void gradeincrement();
-	void gradedecrement();
-	std::string getname() const;
-	int getgrade() const;
-	void signForm(Form &F);
-	class GradeTooHighException : public std::exception
-	{
-		public:
-		virtual const char *what() const throw();
-	};
+	public:
+		Bureaucrat();
+		Bureaucrat(const std::string name, int grade);
+		~Bureaucrat();
+		Bureaucrat &operator=(Bureaucrat const &source);
+		Bureaucrat(Bureaucrat const &source);
+		void gradeincrement();
+		void gradedecrement();
+		std::string getname() const;
+		int getgrade() const;
+		void signForm(Form &F);
+		class GradeTooHighException : public std::exception
+		{
+			public:
+			virtual const char *what() const throw();
+		};
 
-	class GradeTooLowException : public std::exception
-	{
-		public:
-		virtual const char *what() const throw();
-	};
+		class GradeTooLowException : public std::exception
+		{
+			public:
+			virtual const char *what() const throw();
+		};
 };
 
 std::ostream &operator<<(std::ostream &stream, const Bureaucrat &bure);

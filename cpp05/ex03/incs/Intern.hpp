@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
+/*   Intern.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHRUBBERRYCREATIONFORM_HPP
-# define SHRUBBERRYCREATIONFORM_HPP
+#ifndef INTERN_HPP
+# define INTERN_HPP
 
 # include <iostream>
 # include <fstream>
@@ -20,16 +20,15 @@
 
 class Bureaucrat;
 
-class ShrubberyCreationForm : public AForm
+class Intern
 {
   	public:
-  		ShrubberyCreationForm();
-		ShrubberyCreationForm(std::string target);
-		~ShrubberyCreationForm();
-		ShrubberyCreationForm &operator=(ShrubberyCreationForm const &source);
-		ShrubberyCreationForm(ShrubberyCreationForm const &source);
-		void execute(Bureaucrat const & executor) const;
+  		Intern();
+		Intern(std::string target);
+		~Intern();
+		Intern &operator=(Intern const &source);
+		Intern(Intern const &source);
+		AForm *makeForm(std::string form_req,std::string target);
 };
 
-std::ostream &operator<<(std::ostream &stream, const ShrubberyCreationForm &bure);
 #endif

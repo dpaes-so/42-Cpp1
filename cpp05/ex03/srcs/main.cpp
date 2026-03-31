@@ -6,16 +6,17 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:18:43 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/31 18:20:29 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:17:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/Bureaucrat.hpp"
+
+#include "../incs/Intern.hpp"
 #include "../incs/AForm.hpp"
 #include "../incs/ShrubberyCreationForm.hpp"
 #include "../incs/RobotomyRequestForm.hpp"
 #include "../incs/PresidentialPardonForm.hpp"
-#include <ctime>
+#include "../incs/Bureaucrat.hpp"
 
 AForm *create_form(std::string target,char lvl)
 {
@@ -80,45 +81,12 @@ void	delete_vars(Bureaucrat **bures, AForm **forms)
 
 int main()
 {
-	srand(time(0));
-	Bureaucrat	*bures[3];
-	AForm		*forms[3];
-	bures[0] = create_bureaucrat("Low", 120);
-	bures[1] = create_bureaucrat("Mid", 30);
-	bures[2] = create_bureaucrat("High", 1);
-	forms[0] = create_form("fuck u", 'S');
-	forms[1] = create_form("Robot", 'R');
-	forms[2] = create_form("President", 'P');
-	std::cout << "-----------------------------------------------------" << std::endl;
-	
-	bures[0]->signForm(*forms[0]);
-	std::cout << std::endl;
-	
-    bures[0]->executeForm(*forms[0]);
-	std::cout << *bures[0] << std::endl;
-	std::cout << *forms[0] << std::endl;
-
-	bures[1]->signForm(*forms[1]);
-	std::cout << std::endl;
-
-    bures[1]->executeForm(*forms[1]);
-	std::cout << *bures[1] << std::endl;
-	std::cout << *forms[1] << std::endl;
-
-    bures[2]->signForm(*forms[2]);
-	std::cout << std::endl;
-
-    bures[2]->executeForm(*forms[2]);
-	std::cout << *bures[2] << std::endl;
-	std::cout << *forms[2] << std::endl;
-
-	bures[2]->signForm(*forms[1]);//resign
+	Intern	tester;
+	AForm	*form;
+	Bureaucrat smart("Daniel", 1);
     
-	Bureaucrat *fail = create_bureaucrat("Failure", 0);
-    
-    std::cout << std::endl;
-    std::cout << std::endl;
-    delete fail;
-    delete_vars(bures,forms);
-    std::cout << "-----------------------------------------------------" << std::endl;
+	form = tester.makeForm("robotomy request","shrub");
+	smart.executeForm(*form);
+	smart.signForm(*form);
+	delete form;
 }
