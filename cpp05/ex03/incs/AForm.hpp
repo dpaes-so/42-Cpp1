@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:19:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/31 17:33:09 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:35:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ class AForm
 	};
 
 	class AlreadySignedException : public std::exception
+	{
+		public:
+		virtual const char *what() const throw();
+	};
+
+	class NotSignedException : public std::exception
 	{
 		public:
 		virtual const char *what() const throw();

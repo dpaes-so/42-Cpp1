@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/31 17:33:09 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:39:35 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ const char *AForm::AlreadySignedException::what() const throw()
 {
 	return ("Already Signed!(form)");
 }
+const char *AForm::NotSignedException::what() const throw()
+{
+	return ("its not signed!(form)");
+}
+
 std::string AForm::getname() const
 {
 	if((void *)this == NULL)

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/31 17:33:09 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:39:47 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,11 @@ void Bureaucrat::executeForm(AForm const & form) const
 {
 	if((void *)&form == NULL || (void *)this == NULL)
 		return ;
-	if(form.is_signed())
+	
+	try
 	{
+		if(!form.is_signed())
+			throw AForm::NotSignedException();
 		try
 		{
 			form.execute(*this);
@@ -138,9 +141,9 @@ void Bureaucrat::executeForm(AForm const & form) const
 			std::cerr << e.what() << '\n';
 		}
 	}
-	else
+	catch(const std::exception& e)
 	{
-		std::cout << this->getname() << " couldn’t execute " << form.getname() << " because " << "its not signed!"<< std::endl;
+		std::cerr  << this->getname() << " couldn’t execute " << form.getname() << " because " << e.what() << '\n';
 	}
 }
 
