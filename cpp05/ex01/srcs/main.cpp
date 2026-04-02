@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:18:43 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 15:11:45 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/01 16:06:54 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main()
 {
     Bureaucrat *daniel;
     Form *F;
-    F = create_Form("Form",145,2);
+    F = create_Form("Form",140,2);
     daniel = create_Bureaucrat("daniel",150);
     std::cout << *daniel << std::endl;
     daniel->signForm(*F);

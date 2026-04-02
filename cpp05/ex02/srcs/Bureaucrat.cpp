@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bureaucrat.cpp                                     :+:      :+:    :+:   */
+/*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/31 18:39:47 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/02 15:09:29 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 }
 Bureaucrat::~Bureaucrat()
 {
-	std::cout << "Bureaucrat destrcutor" << std::endl;
+	std::cout << "Bureaucrat destructor" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &source) : name(source.getname())
@@ -90,7 +90,7 @@ void Bureaucrat::gradedecrement()
 std::string Bureaucrat::getname() const
 {
 	if((void *)this == NULL)
-		return (NULL);
+		return ("\0");
 	return (this->name);
 }
 

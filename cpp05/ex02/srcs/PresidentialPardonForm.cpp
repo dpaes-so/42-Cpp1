@@ -29,7 +29,7 @@ PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("Pres
 }
 PresidentialPardonForm::~PresidentialPardonForm()
 {
-	std::cout << "Default PresidentialPardonForm destrcutor" << std::endl;
+	std::cout << "Default PresidentialPardonForm destructor" << std::endl;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const &source) : AForm("PresidentialPardonForm",

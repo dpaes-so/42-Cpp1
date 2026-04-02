@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/31 18:39:35 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/02 15:08:42 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 AForm::AForm(void) : name("default") , grade_sign_req(150), grade_exec_req(150)
 {
-	std::cout << "AForm default construcopr" << std::endl;
+	std::cout << "AForm default constructor" << std::endl;
     this->sign = false;
 }
 
@@ -32,7 +32,7 @@ AForm::AForm(const std::string sname, int sgrade_sign_req,int sgrade_exec_req) :
 }
 AForm::~AForm()
 {
-	std::cout << "AForm destrcutor" << std::endl;
+	std::cout << "AForm destructor" << std::endl;
 }
 
 AForm::AForm(AForm const &source) : 
@@ -63,7 +63,7 @@ const char *AForm::NotSignedException::what() const throw()
 std::string AForm::getname() const
 {
 	if((void *)this == NULL)
-		return (NULL);
+		return ("\0");
 	return (this->name);
 }
 

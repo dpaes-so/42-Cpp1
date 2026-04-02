@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 17:03:41 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/02 15:08:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 Form::Form(void) : name("default") , grade_sign_req(150), grade_exec_req(150)
 {
-	std::cout << "Form default construcopr" << std::endl;
+	std::cout << "Form default constructor" << std::endl;
     this->sign = false;
 }
 
@@ -31,7 +31,7 @@ Form::Form(const std::string sname, int sgrade_sign_req,
 }
 Form::~Form()
 {
-	std::cout << "Default Form destrcutor" << std::endl;
+	std::cout << "Default Form destructor" << std::endl;
 }
 
 Form::Form(Form const &source) : 
@@ -54,7 +54,7 @@ const char *Form::GradeTooLowException::what() const throw()
 std::string Form::getname() const
 {
 	if((void *)this == NULL)
-		return (NULL);
+		return ("\0");
 	return (this->name);
 }
 

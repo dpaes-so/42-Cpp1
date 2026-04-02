@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:18:43 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/24 15:50:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/01 15:59:19 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ int main()
 {
     Bureaucrat *daniel;
 
-    daniel = create_Bureaucrat("burro",170);
+    daniel = create_Bureaucrat("burro",140);
     std::cout << *daniel << std::endl;
-    Bureaucrat *diogo = create_Bureaucrat("smort",130);
+    Bureaucrat *diogo = create_Bureaucrat("smort", 70);
     
     *diogo = *daniel;
     *daniel=*diogo;
     diogo->gradedecrement();
+    daniel->gradedecrement();
     daniel->getname();
     // daniel->gradedecrement();
     // daniel->gradedecrement();
@@ -47,11 +48,13 @@ int main()
     // daniel->gradedecrement();
     // daniel->gradedecrement();
     // daniel->gradedecrement();
-    // daniel->gradedecrement();
-    // daniel->gradedecrement();
-    // daniel->gradedecrement();
-    // daniel->gradedecrement();
-    // daniel->gradedecrement();
+    daniel->gradeincrement();
+    daniel->gradedecrement();
+    daniel->gradedecrement();
+    daniel->gradeincrement();
+    diogo->gradeincrement();
+    daniel->gradedecrement();
+    daniel->gradedecrement();
     std::cout << *daniel << std::endl;
     delete daniel;
     delete diogo;

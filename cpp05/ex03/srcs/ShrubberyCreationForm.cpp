@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/31 15:50:04 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/02 15:11:41 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("Shrubb
 }
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-	std::cout << "Default ShrubberyCreationForm destrcutor" << std::endl;
+	std::cout << "Default ShrubberyCreationForm destructor" << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &source) : AForm("ShrubberyCreationForm",

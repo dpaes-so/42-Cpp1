@@ -29,7 +29,7 @@ RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRe
 }
 RobotomyRequestForm::~RobotomyRequestForm()
 {
-	std::cout << "Default RobotomyRequestForm destrcutor" << std::endl;
+	std::cout << "Default RobotomyRequestForm destructor" << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &source) : AForm("RobotomyRequestForm",

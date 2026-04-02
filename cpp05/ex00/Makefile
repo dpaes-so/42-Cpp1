@@ -6,7 +6,7 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 14:06:50 by dpaes-so          #+#    #+#              #
-#    Updated: 2026/03/20 16:24:46 by dpaes-so         ###   ########.fr        #
+#    Updated: 2026/04/02 15:03:26 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = bureaucrat
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
 
-SRC = main.cpp bureaucrat.cpp
+SRC = main.cpp Bureaucrat.cpp
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SRC))
 

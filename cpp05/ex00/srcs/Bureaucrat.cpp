@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bureaucrat.cpp                                     :+:      :+:    :+:   */
+/*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 14:38:50 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/03/26 17:04:06 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/02 15:07:41 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 Bureaucrat::Bureaucrat(void) : name("default")
 {
-	std::cout << "Default Bureaucrat construcopr" << std::endl;
+	std::cout << "Default Bureaucrat constructor" << std::endl;
 	this->grade = 150;
 }
 
 Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 {
-	std::cout << "Bureaucrat construcopr" << std::endl;
+	std::cout << "Bureaucrat constructor" << std::endl;
 	if (sgrade > 150)
 		throw GradeTooLowException();
 	if (sgrade < 1)
@@ -30,7 +30,7 @@ Bureaucrat::Bureaucrat(const std::string sname, int sgrade) : name(sname)
 
 Bureaucrat::~Bureaucrat()
 {
-	std::cout << "Bureaucrat destrcutor" << std::endl;
+	std::cout << "Bureaucrat destructor" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &source) : name(source.getname())
@@ -89,7 +89,7 @@ void Bureaucrat::gradedecrement()
 std::string Bureaucrat::getname() const
 {
 	if((void *)this == NULL)
-		return (NULL);
+		return ("\0");
 	return (this->name);
 }
 
@@ -115,7 +115,6 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &source)
 	std::cout << "Bureaucrat Copy assignment operator" << std::endl;
 	if (this != &source)
 	{
-		std::cout << "wtv am i here\n";
 		this->grade = source.getgrade();
 	}
 	return (*this);

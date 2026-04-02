@@ -31,7 +31,7 @@ Intern::Intern(std::string target)
 }
 Intern::~Intern()
 {
-	std::cout << "Default Intern destrcutor" << std::endl;
+	std::cout << "Default Intern destructor" << std::endl;
 }
 
 Intern::Intern(Intern const &source)

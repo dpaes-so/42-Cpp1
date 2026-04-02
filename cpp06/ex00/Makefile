@@ -6,16 +6,16 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 14:06:50 by dpaes-so          #+#    #+#              #
-#    Updated: 2026/04/02 15:06:46 by dpaes-so         ###   ########.fr        #
+#    Updated: 2026/04/02 16:13:38 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Forms
+NAME = scalar
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
 
-SRC = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp Intern.cpp
+SRC = main.cpp ScalarConverter.cpp
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SRC))
 
@@ -38,6 +38,5 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm *_shrubbery
 
 re: fclean all
