@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 16:04:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/08 16:48:19 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/20 18:15:53 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <string>
 #include <sstream>
 
+//defautl stuff
 ScalarConverter::ScalarConverter()
 {
 	
@@ -21,7 +22,7 @@ ScalarConverter::ScalarConverter()
 
 ScalarConverter::ScalarConverter(const ScalarConverter &scalar)
 {
-	(void)scalar;
+	*this = scalar;
 }
 
 ScalarConverter::~ScalarConverter()
@@ -35,6 +36,7 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &scalar)
 	return(*this);
 }
 
+//aux
 static int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)
@@ -44,10 +46,16 @@ static int	ft_isprint(int c)
 	return (0);
 }
 
-static void char_output(int c)
+//output
+static void char_output(double c)
 {
+	if(std::isnan(c) || std::isinf(c))
+	{
+		std::cout << "char: Impossible" << std::endl;
+		return ;
+	}
 	if(ft_isprint(c))
-		std::cout << "char: " << static_cast<char>(c) << std::endl;
+		std::cout << "char: '" << static_cast<char>(c) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
 }
@@ -55,12 +63,12 @@ static void char_output(int c)
 static void int_output(double c,std::string original)
 {
 	(void)original;
-	if(std::isnan(c))
+	if(std::isnan(c) || std::isinf(c))
 	{
 		std::cout << "int: Impossible" << std::endl;
 		return ;
 	}
-	std::cout << "int: " << c << std::endl;	
+	std::cout << "int: " << static_cast<int>(c) << std::endl;	
 }
 
 static void float_output(double c,std::string original)
@@ -72,27 +80,46 @@ static void float_output(double c,std::string original)
 
 }
 
+static void double_output(double c,std::string original)
+{
+	(void)original;
+	std::cout << "double: " << c <<  std::endl;	
+
+}
+
+//parse
+static int count_char(std::string s,char c) {
+  int count = 0;
+
+  for (size_t i = 0; i < s.size(); i++)
+  {
+    if (s[i] == c)
+		count++;
+  }
+  return count;
+}
+
 static ret parse(std::string og)
 {
 	char *flag;
 	flag = NULL;
 	
 	if(og.find(".") != std::string::npos)
-		return (special);
+	{
+		if(og.find_first_not_of("1234567890.-f") != og.npos || count_char(og,'-') > 1 || count_char(og,'.') > 1 || count_char(og,'f') > 1)
+			return(fail);
+		if((og[og.length() - 1]== '.' )|| (og[og.length() - 2] == '.' && og[og.length() -1] == 'f'))
+			return(fail);
+		return (normal);
+	}
 	else
 	{
 		std::strtod(og.c_str(),&flag);
 		if(*flag)
-		{
-			std::cout << "char: Impossible" << std::endl;
-			std::cout << "int: Impossible" << std::endl;
-			std::cout << "float: Impossible" << std::endl;
-			std::cout << "double: Impossible" << std::endl;
 			return (fail);
-		}
 		return(normal);
 	}
-	return fail;
+	return (fail);
 }
 void ScalarConverter::convert(std::string string)
 {
@@ -102,14 +129,16 @@ void ScalarConverter::convert(std::string string)
 	ret r = parse(string);
 	
 	if(r == fail)
+	{
+		std::cout << "char: Impossible" << std::endl;
+		std::cout << "int: Impossible" << std::endl;
+		std::cout << "float: Impossible" << std::endl;
+		std::cout << "double: Impossible" << std::endl;
 		return ;
-		
-	if (r == special)
-		val = std::strtod(string.c_str(),NULL);
-	else
-		val = std::strtod(string.c_str(),NULL);
-		
+	}
+	val = std::strtod(string.c_str(),NULL);
 	char_output(val);
 	int_output(val,string);
 	float_output(val,string);
+	double_output(val,string);
 }

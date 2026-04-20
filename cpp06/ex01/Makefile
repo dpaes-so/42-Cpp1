@@ -6,16 +6,16 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 14:06:50 by dpaes-so          #+#    #+#              #
-#    Updated: 2026/04/20 17:27:42 by dpaes-so         ###   ########.fr        #
+#    Updated: 2026/04/09 15:05:21 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = convert
+NAME = Serializer
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
 
-SRC = main.cpp ScalarConverter.cpp
+SRC = main.cpp Serialization.cpp
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SRC))
 

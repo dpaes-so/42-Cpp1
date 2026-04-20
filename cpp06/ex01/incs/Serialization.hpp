@@ -1,43 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Serialization.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 15:49:22 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/09 13:51:48 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/09 14:43:05 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALARCONVERT_HPP
 
-# define SCALARCONVERT_HPP
- 
+#ifndef SERIALIZATION_HPP
 
+# define SERIALIZATION_HPP
+
+#include <stdint.h>
 #include <iostream>
-#include <iomanip>
-#include <cstdlib>
-#include <limits.h>
-#include <cmath>
 
-class ScalarConverter 
+struct Data
+{
+	std::string s;	
+};
+
+class Serializer 
 {
 	private:
-		ScalarConverter();
-		~ScalarConverter();
-		ScalarConverter(const ScalarConverter &scalar);
-		ScalarConverter &operator=(const ScalarConverter &scalar);
+		Serializer();
+		~Serializer();
+		Serializer(const Serializer &Serializer);
+		Serializer &operator=(const Serializer &Serializer);
 
 	public:
-		static void convert(std::string string);
-	
+		static uintptr_t serialize(Data* ptr);
+		static Data* deserialize(uintptr_t raw);
 };
-
-enum ret {
-  special,
-  normal,
-  fail
-};
-
 #endif
