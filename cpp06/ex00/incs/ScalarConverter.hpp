@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 15:49:22 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/09 13:51:48 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/21 15:20:49 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <limits.h>
 #include <cmath>
+#include <iomanip>
 
 class ScalarConverter 
 {
@@ -35,9 +36,11 @@ class ScalarConverter
 };
 
 enum ret {
-  special,
-  normal,
-  fail
+  CHAR,
+  INT,
+  FLOAT,
+  DOUBLE,
+  FAIL,
 };
 
 #endif
