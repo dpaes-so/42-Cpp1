@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 15:45:31 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/09 15:18:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/22 14:05:23 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ int main()
 	Data *der  = Serializer::deserialize(ser);
 	std::cout << "der: " << der << std::endl;
 	std::cout << "post stuff something: " << &d->s << std::endl;
-
+	delete (d);
 }

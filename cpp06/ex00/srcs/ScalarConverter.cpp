@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 16:04:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/21 15:44:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/22 15:56:26 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,27 @@ static int	ft_isprint(int c)
 	return (0);
 }
 
+static int count_char(std::string s,char c) 
+{
+  int count = 0;
+
+  for (size_t i = 0; i < s.size(); i++)
+  {
+    if (s[i] == c)
+		count++;
+  }
+  return count;
+}
+
+static ret is_special(std::string str)
+{
+	if(str == "inf" || str == "inff" || str == "+inf" || str == "+inff" || str == "-inf" || str == "-inff")
+		return(INF);
+	if (std::isnan(std::strtod(str.c_str(),NULL)))
+		return(NaN);
+	return(INT);
+}
+
 //output
 static void char_output(char c)
 {
@@ -57,6 +78,34 @@ static void char_output(char c)
 	std::cout << "float: " << static_cast<float>(c) << "f" <<  std::endl;	
 	std::cout << "double: " << static_cast<double>(c) << std::endl;	
 
+}
+
+static void special_output(std::string num)
+{
+	ret check;
+
+	check = is_special(num);
+	
+	std::cout << "char: Impossible" << std::endl;
+	std::cout << "int: Impossible" << std::endl;
+	if(check == INF)
+	{
+		if(count_char(num,'f') > 1)
+		{
+			std::cout << "float: " << num << std::endl;
+			std::cout << "double: " << num.substr(0,num.length() - 1) << std::endl;
+		}
+		else
+		{
+			std::cout << "float: " << num << "f" << std::endl;
+			std::cout << "double: " << num << std::endl;
+		}
+	}
+	if(check == NaN)
+	{
+		std::cout << "float: " << "nanf" << std::endl;
+		std::cout << "double: " << "nan" << std::endl;
+	}
 }
 
 static void int_output(std::string og)
@@ -95,38 +144,23 @@ static void double_output(std::string og)
 	else
 		std::cout << "char: Non displayable" << std::endl;
 	std::cout << "int: " << static_cast<int>(val) << std::endl;	
-	std::cout << std::fixed << std::showpoint;
+	std::cout << std::fixed;
     std::cout << std::setprecision(1);
 	std::cout << "float: " << static_cast<float>(val) << "f" <<  std::endl;	
 	std::cout << "double: " << (val) << std::endl;		
 }
 
 //parse
-static int count_char(std::string s,char c) {
-  int count = 0;
-
-  for (size_t i = 0; i < s.size(); i++)
-  {
-    if (s[i] == c)
-		count++;
-  }
-  return count;
-}
-
 static ret parse(std::string og)
 {
 	double val;
 	char *flag;
-	flag = NULL;
 	
+	flag = NULL;
 	if(og.length() == 1 && !isdigit(og.at(0)))
-	{
-		std::cout << "if u read this and u were not expectig soetings is really wrong" << std::endl;
 		return(CHAR);
-	}
 	else if(og.find(".") != std::string::npos)
 	{
-		std::cout << "else if " << std::endl;
 		if(og.find_first_not_of("1234567890.-f") != og.npos || count_char(og,'-') > 1 || count_char(og,'.') > 1 || count_char(og,'f') > 1)
 			return(FAIL);
 		if(og[og.length() - 1]== '.' || og[og.find('.')+ 1 ]== 'f')
@@ -141,8 +175,12 @@ static ret parse(std::string og)
 	else
 	{
 		std::cout << "else" << std::endl;
+		if(is_special(og) != INT)
+			return(SPECIAL);
 		val = std::strtod(og.c_str(),&flag);
-		if(*flag || std::isinf(val) || std::isnan(val))
+		if(val > 2147483647)
+			return(FAIL);
+		if(*flag)
 			return (FAIL);
 		return(INT);
 	}
@@ -151,16 +189,16 @@ static ret parse(std::string og)
 
 void ScalarConverter::convert(std::string string)
 {
-	double val;
+	// double val;
 	std::cout << "Original: " << string << std::endl;
 	ret r = parse(string);
 	
-	if(r != FAIL)
-	{
-		val = std::strtod(string.c_str(),NULL);
-		if(val > 2147483647)
-			r = FAIL;
-	}
+	// if(r != FAIL && r != SPECIAL)
+	// {
+	// 	val = std::strtod(string.c_str(),NULL);
+	// 	if(val > 2147483647)
+	// 		r = FAIL;
+	// }
 	switch (r)
 	{
 		case (CHAR):
@@ -178,6 +216,10 @@ void ScalarConverter::convert(std::string string)
 		case (DOUBLE):
 			std::cout << "double guy" << std::endl;
 			double_output(string);
+			break;
+		case (SPECIAL):
+			std::cout << "special guy" << std::endl;
+			special_output(string);
 			break;
 		case (FAIL):
 			std::cout << "char: Impossible" << std::endl;

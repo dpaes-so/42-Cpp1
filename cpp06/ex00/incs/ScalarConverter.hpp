@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 15:49:22 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/21 15:20:49 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/22 15:43:36 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ enum ret {
   INT,
   FLOAT,
   DOUBLE,
+  INF,
+  NaN,
+  SPECIAL,
   FAIL,
 };
 
