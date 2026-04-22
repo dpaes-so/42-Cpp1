@@ -6,8 +6,14 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/21 17:48:00 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/22 17:09:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Array.hpp"
+
+int main()
+{
+	Array< int > ar(5);
+	std::cout << ar.size() << std::endl;
+}

@@ -13,15 +13,25 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 #include <iostream>
+// #include "../srcs/array.tpp"
 
-template<typename T> 
-class Array
+template<typename T> class Array
 {
 	public:
-		T _arr;
+		T *_arr;
 	public:
-		Array();
+		// Array();
+		Array(unsigned int n) {this->_arr = new T[n];this->_arr[0] =2;};
+		// Array(const T&source);
+		// Array &operator=(const T &source);
+		int size() const
+		{
+			int i = 0;
+			while(this->_arr[i])
+				i++;
+			return(i);
+		};
+
 
 };
-
 #endif
