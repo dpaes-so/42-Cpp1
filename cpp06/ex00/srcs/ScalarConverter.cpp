@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 16:04:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/22 16:32:43 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:09:14 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,10 @@ static void float_output(std::string og)
 		std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
-	std::cout << "int: " << static_cast<int>(val) << std::endl;	
+	if(std::strtod(og.c_str(),NULL) > INT_MAX || std::strtod(og.c_str(),NULL) < INT_MIN)
+		std::cout << "int: " << "Impossible" << std::endl;	
+	else
+		std::cout << "int: " << static_cast<int>(val) << std::endl;	
 	std::cout << std::fixed << std::showpoint;
     std::cout << std::setprecision(1);
 	std::cout << "float: " << (val) << "f" <<  std::endl;	
