@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 16:04:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/23 14:09:14 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:12:47 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ static ret parse(std::string og)
 	}
 	else
 	{
-		std::cout << "else" << std::endl;
 		if(is_special(og) != INT)
 			return(SPECIAL);
 		val = std::strtod(og.c_str(),&flag);
@@ -199,32 +198,21 @@ void ScalarConverter::convert(std::string string)
 	std::cout << "Original: " << string << std::endl;
 	ret r = parse(string);
 	
-	// if(r != FAIL && r != SPECIAL)
-	// {
-	// 	val = std::strtod(string.c_str(),NULL);
-	// 	if(val > 2147483647)
-	// 		r = FAIL;
-	// }
 	switch (r)
 	{
 		case (CHAR):
-			std::cout << "cool guy" << std::endl;
 			char_output(string.at(0));
 			break;
 		case (INT):
-			std::cout << "int guy" << std::endl;
 			int_output(string);
 			break;
 		case (FLOAT):
-			std::cout << "float guy" << std::endl;
 			float_output(string);
 			break;
 		case (DOUBLE):
-			std::cout << "double guy" << std::endl;
 			double_output(string);
 			break;
 		case (SPECIAL):
-			std::cout << "special guy" << std::endl;
 			special_output(string);
 			break;
 		case (FAIL):
