@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 15:45:31 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/22 14:05:23 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:33:59 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 int main()
 {
 	Data * d = new Data;
+	d->s = "something";	
 
-	d->s = "something";
-		
-	std::cout << "pre stuff something: " << &d->s << std::endl;
-	std::cout << "og: " << d << std::endl;
 	uintptr_t ser = Serializer::serialize(d);
-	std::cout << "ser: " << ser << std::endl;
-	Data *der  = Serializer::deserialize(ser);
-	std::cout << "der: " << der << std::endl;
-	std::cout << "post stuff something: " << &d->s << std::endl;
+	Data *der = Serializer::deserialize(ser);
+
+	std::cout << "Original address: " << d << std::endl;
+	std::cout << "Serialized: 	  0x" << ser << std::endl;
+	std::cout << "Deserialized:	  " << der << std::endl;
+
+	if (der == d)
+		std::cout << "Pointers match" << std::endl;
+	else
+		std::cout << "Pointers don't match" << std::endl;
 	delete (d);
+	return 0;
 }

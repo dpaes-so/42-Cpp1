@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 13:57:45 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/22 13:18:20 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:38:06 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ Base * generate(void)
 		default:
 			randy = NULL;
 	}
-	std::cout << res << std::endl;
 	return(randy);
 }
 
