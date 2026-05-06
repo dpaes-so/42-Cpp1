@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 16:04:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/04/23 14:12:47 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/04/28 14:10:56 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ static ret parse(std::string og)
 	{
 		if(og.find_first_not_of("1234567890.-f") != og.npos || count_char(og,'-') > 1 || count_char(og,'.') > 1 || count_char(og,'f') > 1)
 			return(FAIL);
-		if(og[og.length() - 1]== '.' || og[og.find('.')+ 1 ]== 'f')
+		if(og[og.length() - 1]== '.' || og[og.find('.')+ 1 ]== 'f' || og[og.find('.') - 1 ] == 'f')
 			return(FAIL);
 		if(og.find('-') != std::string::npos && og.find('-') != 0)
 			return(FAIL);
@@ -194,7 +194,6 @@ static ret parse(std::string og)
 
 void ScalarConverter::convert(std::string string)
 {
-	// double val;
 	std::cout << "Original: " << string << std::endl;
 	ret r = parse(string);
 	

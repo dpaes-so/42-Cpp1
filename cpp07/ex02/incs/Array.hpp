@@ -20,17 +20,12 @@ template<typename T> class Array
 	public:
 		T *_arr;
 	public:
-		// Array();
-		Array(unsigned int n) {this->_arr = new T[n];this->_arr[0] =2;};
-		// Array(const T&source);
-		// Array &operator=(const T &source);
-		int size() const
-		{
-			int i = 0;
-			while(this->_arr[i])
-				i++;
-			return(i);
-		};
+		Array();
+		Array(unsigned int n);
+		Array(const Array &source);
+		Array &operator=(const Array &source);
+		T operator[](int n) const ;
+		int size() const;
 
 
 };
