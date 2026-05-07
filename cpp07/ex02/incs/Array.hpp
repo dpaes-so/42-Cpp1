@@ -17,15 +17,17 @@
 
 template<typename T> class Array
 {
-	public:
+	private:
 		T *_arr;
+		unsigned int _size;
 	public:
 		Array();
+		~Array();
 		Array(unsigned int n);
 		Array(const Array &source);
 		Array &operator=(const Array &source);
-		T operator[](int n) const ;
-		int size() const;
+		T &operator[](unsigned int n);
+		unsigned int size() const;
 
 
 };

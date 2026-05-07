@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:37:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/06 17:19:46 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:16:52 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,49 @@
 template<typename T> 
 Array<T>::Array()
 {
+	std::cout << "Array default constructor\n";
 	this->_arr = new T[0];
+	this->_size = 0;
 }
 
 template<typename T> 
 Array<T>::Array(unsigned int n)
 {
+	std::cout << "Array size constructor\n";
 	this->_arr = new T[n];
+	this->_size = n;
 }
+
+template<typename T> 
+Array<T>::~Array()
+{
+	std::cout << "Array default destructor\n";
+	delete[] this->_arr;
+}
+
 template<typename T>
 Array<T>::Array(const Array &source)
 {
+	std::cout << "Array copy constructor\n";
 	this->_arr = NULL;
 	*this = source;
 }
 template<typename T>
-int Array<T>::size() const
+unsigned int Array<T>::size() const
 {
-	int i = 0;
-	while(this->_arr[i])
-	{
-		i++;
-	}
-	return(i);
+	return(this->_size);
 }
 
 template<typename T>
 Array<T> &Array<T>::operator=(const Array &source)
 {
+	std::cout << "Array assignment operator\n";
 	if(this != &source)
 	{
 		delete[] this->_arr;
 		this->_arr = new T[source.size()];
-		for(int i = 0;source._arr[i];i++)
+		this->_size = source._size;
+		for(unsigned int i = 0; i < source._size;i++)
 		{
 			this->_arr[i] = source._arr[i];
 		}
@@ -57,9 +67,9 @@ Array<T> &Array<T>::operator=(const Array &source)
 }
 
 template<typename T>
-T Array<T>::operator[](int n) const 
+T &Array<T>::operator[](unsigned int n) 
 {
 	if(n > this->size())
-		throw std::invalid_argument("out of bounds");
+		throw std::out_of_range("out of bounds");
 	return(this->_arr[n]);
 }
