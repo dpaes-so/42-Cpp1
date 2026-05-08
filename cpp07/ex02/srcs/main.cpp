@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/07 16:49:11 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/08 16:14:33 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 int main()
 {
+	try
 	{
-		Array< int > ar(5);
+		// Array< int > ar(0);
+		Array<int> ar;
 		ar[0] = 42;
 		std::cout << ar[0] << std::endl;
 		std::cout << ar.size() << std::endl;
@@ -25,6 +27,11 @@ int main()
 		Array<int> ar3 = ar;
 		std::cout << ar3.size() << std::endl;
 	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
 	{
 		Array< char > ar(5);
 		ar[0] = 42;
@@ -35,4 +42,45 @@ int main()
 		Array<char> ar3 = ar;
 		std::cout << ar3.size() << std::endl;
 	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 }
+
+
+// int main()
+// {
+// 	try
+// 	{
+// 		Array< int > ar(0);
+// 		// Array<int> ar;
+// 		ar[0] = 42;
+// 		std::cout << ar[0] << std::endl;
+// 		std::cout << ar.size() << std::endl;
+// 		Array< int > ar2(ar);
+// 		std::cout << ar2.size() << std::endl;
+// 		Array<int> ar3 = ar;
+// 		std::cout << ar3.size() << std::endl;
+// 	}
+// 	catch(const std::exception& e)
+// 	{
+// 		std::cerr << e.what() << '\n';
+// 	}
+// 	try
+// 	{
+// 		Array< char > ar(5);
+// 		ar[0] = 42;
+// 		std::cout << ar[0] << std::endl;
+// 		std::cout << ar.size() << std::endl;
+// 		Array< char > ar2(ar);
+// 		std::cout << ar2.size() << std::endl;
+// 		Array<char> ar3 = ar;
+// 		std::cout << ar3.size() << std::endl;
+// 	}
+// 	catch(const std::exception& e)
+// 	{
+// 		std::cerr << e.what() << '\n';
+// 	}
+	
+// }
