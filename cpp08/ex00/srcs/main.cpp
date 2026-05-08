@@ -6,25 +6,42 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/08 18:17:36 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:30:09 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/whatever.hpp"
+#include "../incs/easyfind.hpp"
+#include <vector>
+#include <list>
 
-int main( void ) 
+int main(void)
 {
-	int a = 2;
-	int b = 3;
-	swap( a, b );
-	std::cout << "a = " << a << ", b = " << b << std::endl;
-	std::cout << "min( a, b ) = " << min( a, b ) << std::endl;
-	std::cout << "max( a, b ) = " << max( a, b ) << std::endl;
-	std::string c = "chaine1";
-	std::string d = "chaine2";
-	swap(c, d);
-	std::cout << "c = " << c << ", d = " << d << std::endl;
-	std::cout << "min( c, d ) = " << min( c, d ) << std::endl;
-	std::cout << "max( c, d ) = " << max( c, d ) << std::endl;
+	std::vector<int> v;
+	std::list<int> l;
+
+	for(unsigned int i = 0;i < 5;i++)
+		v.push_back(i);
+	
+	for(unsigned int i = 0;i < 5;i++)
+		l.push_back(i);
+	
+	try
+	{
+		std::vector<int>::iterator it = easyfind(v,3);
+		std::cout << "found: (" << *it << ") in the container\n";
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		std::list<int>::iterator it = easyfind(l,-2);
+		std::cout << "found: (" << *it << ") in the container\n";
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 	return 0;
 }

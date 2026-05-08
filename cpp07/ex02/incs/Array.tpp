@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:37:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/08 16:15:30 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/08 17:07:08 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ Array<T> &Array<T>::operator=(const Array &source)
 template<typename T>
 T &Array<T>::operator[](unsigned int n) 
 {
-	if(n > this->size() || _size == 0)
+	if(n >= this->size() || _size == 0)
 		throw std::out_of_range("out of bounds");
 	return(this->_arr[n]);
 }
@@ -77,7 +77,7 @@ T &Array<T>::operator[](unsigned int n)
 template<typename T>
 const T &Array<T>::operator[](unsigned int n) const
 {
-	if(n > this->size() || _size == 0)
+	if(n >= this->size() || _size == 0)
 		throw std::out_of_range("out of bounds");
 	return(this->_arr[n]);
 }
