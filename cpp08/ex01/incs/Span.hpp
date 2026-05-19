@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   easyfind.hpp                                       :+:      :+:    :+:   */
+/*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/19 17:23:51 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:50:53 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,24 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <limits.h>
 
-template <typename T>
-typename T::iterator easyfind(T &cont,int n)
+
+class Span
 {
-	typename T::iterator it;
-	
-	it = std::find(cont.begin(),cont.end(),n);
-	if(it != cont.end() && *it == n)
-		return(it);
-	return(cont.end());
-}
+	private:
+		std::vector<int> v;
+		size_t _size;
+	public:
+		Span();
+		Span(size_t size);
+		~Span();
+		void addNumberrange(size_t n,size_t N);
+		void addNUmber(int n);
+		std::vector<int> getSpan() const ;
+		int shortestSpan();
+		int longestSpan();
+};
 
+std::ostream &operator<<(std::ostream &os,const Span &v);
 #endif

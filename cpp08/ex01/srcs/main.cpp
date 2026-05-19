@@ -6,51 +6,28 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/19 17:29:11 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:59:00 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/easyfind.hpp"
+#include "../incs/Span.hpp"
 #include <vector>
 #include <list>
 
 int main(void)
 {
-	std::vector<int> v;
-	std::list<int> l;
-
-	for(unsigned int i = 0;i < 5;i++)
-		v.push_back(i);
-	
-	for(unsigned int i = 0;i < 5;i++)
-		l.push_back(i);
-	
 	try
 	{
-		int f = 3;
-		std::vector<int>::iterator it = easyfind(v,f);
-		if (it != v.end())
-			std::cout << "found: (" << *it << ") in the container\n";
-		else
-			std::cout << "couldn't find: (" << f << ") in the container\n";
+		Span span(10);
 
+		span.addNumberrange(0,50);
+		std::cout << span;
+		// std::cout << "shortest span is " << span.shortestSpan() << std::endl;
+		// std::cout << "shortest span is " << span.longestSpan() << std::endl;
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
 	}
-	try
-	{
-		int f = 4;
-		std::list<int>::iterator it = easyfind(l,f);
-		if (it != l.end())
-			std::cout << "found: (" << *it << ") in the container\n";
-		else
-			std::cout << "couldn't find: (" << f << ") in the container\n";
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	return 0;
+	
 }

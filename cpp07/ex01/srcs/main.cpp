@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/12 15:29:23 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/12 15:47:40 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ int main(void)
 	std::cout << "const array, const print";
 	::iter(arr, 5, printInt);
 	std::cout << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "no const array, const print";
+	::iter(arr2, 5, printInt);
+	std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << "const array, same type print";
 	::iter(arr, 5, printt);
@@ -31,8 +37,9 @@ int main(void)
 	::iter(arr2, 5, printt);
 	std::cout << std::endl;
 	
-	std::cout << "no const no const";
+	std::cout << "no const no const(increment)";
 	::iter(arr2, 5, incrementInt);
+	::iter(arr2, 5, printt);
 	std::cout << std::endl;
 
 	std::cout << "no const string, const print";
