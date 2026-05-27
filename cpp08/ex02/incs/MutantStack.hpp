@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Span.hpp                                           :+:      :+:    :+:   */
+/*   MutantStack.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/21 15:08:05 by finn             ###   ########.fr       */
+/*   Updated: 2026/05/21 17:17:48 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EASYFIND_HPP
 #define EASYFIND_HPP
 #include <iostream>
-#include <vector>
-#include <list>
-#include <algorithm>
-#include <limits.h>
+#include <stack>
+#include <deque>
 
-
-class Span
+template <typename T,typename Container = std::deque<T> >
+class MutantStack
 {
-	private:
-		std::vector<int> v;
-		size_t _size;
 	public:
-		Span();
-		Span(size_t size);
-		Span(const Span &obj);
-		Span &operator=(const Span &obj);
-		~Span();
-		void addNumberrange(size_t n,size_t N);
-		void addNUmber(int n);
-		std::vector<int> getSpan() const ;
-		int shortestSpan();
-		int longestSpan();
+		MutantStack();
+		~MutantStack();
 };
 
-std::ostream &operator<<(std::ostream &os,const Span &v);
 #endif

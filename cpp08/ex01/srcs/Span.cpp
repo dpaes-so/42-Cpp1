@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 17:32:10 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/19 19:00:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/21 15:11:52 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,24 @@ std::vector<int> Span::getSpan() const
 {
 	return(this->v);
 }
+
+Span::Span(const Span &obj)
+{
+	*this = obj;
+}
+
+
+Span &Span::operator=(const Span &obj)
+{
+	if(this != &obj)
+	{
+		this->v.erase(this->v.begin(),this->v.end());
+		this->v = obj.v;
+		this->_size = obj._size;
+	}
+	return(*this);
+}
+
 void Span::addNUmber(int n)
 {
 	if(this->v.size() < _size)
