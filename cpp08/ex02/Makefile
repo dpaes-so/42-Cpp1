@@ -6,16 +6,16 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 14:06:50 by dpaes-so          #+#    #+#              #
-#    Updated: 2026/05/19 18:51:22 by dpaes-so         ###   ########.fr        #
+#    Updated: 2026/05/27 14:12:17 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = span
+NAME = mutantstack
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
 
-SRC = main.cpp Span.cpp
+SRC = main.cpp
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SRC))
 

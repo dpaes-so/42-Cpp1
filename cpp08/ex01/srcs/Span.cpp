@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 17:32:10 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/21 15:11:52 by finn             ###   ########.fr       */
+/*   Updated: 2026/05/27 15:32:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 Span::Span()
 {
+	std::cout << "Default Span constructor\n";
 	this->_size = 0;
 }
 
 Span::Span(size_t size)
 {
+	std::cout << "Span constructor\n";
 	this->_size = size;
 }
 
 Span::~Span()
 {
-	
+	std::cout << "Default Span destructor\n";
 }
 
 std::vector<int> Span::getSpan() const
@@ -34,12 +36,14 @@ std::vector<int> Span::getSpan() const
 
 Span::Span(const Span &obj)
 {
+	std::cout << "copy Span constructor\n";
 	*this = obj;
 }
 
 
 Span &Span::operator=(const Span &obj)
 {
+	std::cout << "Span copy assignment overload\n";
 	if(this != &obj)
 	{
 		this->v.erase(this->v.begin(),this->v.end());
