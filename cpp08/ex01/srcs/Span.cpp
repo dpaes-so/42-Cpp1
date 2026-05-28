@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 17:32:10 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/27 15:32:04 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/05/28 15:08:10 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,23 @@ void Span::addNumberrange(size_t n,size_t N)
 {
 	try
 	{
-		while (n <= N)
+		if(n > N)
 		{
-			this->addNUmber(n);
-			n++;
+			while (n >= N)
+			{
+				this->addNUmber(n);
+				if(n == 0)
+					break ;
+				n--;
+			}
+		}
+		else
+		{
+			while (n <= N)
+			{
+				this->addNUmber(n);
+				n++;
+			}
 		}
 	}
 	catch(const std::exception& e)
@@ -79,29 +92,22 @@ void Span::addNumberrange(size_t n,size_t N)
 
 int Span::shortestSpan()
 {
-	size_t i = 0;
-	size_t j = 0;
-	int a,b;
-	int res;
-	int final = __INT_MAX__;
-
 	if(v.size() == 0 || v.size() == 1)
 		throw std::out_of_range("Span is to small!\n");
-	while(i != v.size())
-	{ 
-		a = v.at(i);
-		j = i + 1;
-		while(j != v.size())
-		{
-			b = v.at(j);
-			if(a > b)
-				res = a - b;
-			else
-				res = b - a;
-			if(res < final)
-				final = res;	
-			j++;
-		}
+
+	size_t i = 0;
+	int a,b,res;
+	std::vector<int> temp;
+	temp = this->v;
+	int final = std::numeric_limits<int>::max();
+	std::sort(temp.begin(),temp.end());
+	while(i + 1 != temp.size())
+	{
+		a = temp.at(i);
+		b = temp.at(i+1);
+		res = b - a;
+		if(res < final)
+			final = res;
 		i++;
 	}
 	return(final);
@@ -109,32 +115,12 @@ int Span::shortestSpan()
 
 int Span::longestSpan()
 {
-	size_t i = 0;
-	size_t j = 0;
-	int a,b;
-	int res;
-	int final = 0;
-
 	if(v.size() == 0 || v.size() == 1)
 		throw std::out_of_range("Span is to small!\n");
-	while(i != v.size())
-	{ 
-		a = v.at(i);
-		j = i + 1;
-		while(j != v.size())
-		{
-			b = v.at(j);
-			if(a > b)
-				res = a - b;
-			else
-				res = b - a;
-			if(res > final)
-				final = res;	
-			j++;
-		}
-		i++;
-	}
-	return(final);
+
+	std::vector<int> temp = this->v;
+	std::sort(temp.begin(),temp.end());
+	return(temp.at(temp.size() - 1) - temp.at(0));
 }
 
 std::ostream &operator<<(std::ostream &os,const Span &v)
