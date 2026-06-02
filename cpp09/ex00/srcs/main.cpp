@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/05/29 18:39:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/02 16:02:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ std::string ltrim(const std::string& s)
     return (pos == std::string::npos) ? std::string() : s.substr(pos); 
 } 
 
+int count_spaces(const std::string& s)
+{
+	int count = 0;
+	size_t i = 0;
+	for(i = 0;i<s.length();i++)
+	{
+		if(s.at(i) == ' ')
+			count++;
+		if(count > 1)
+			break;
+	}
+	return(count);
+}
 bool first_parse(char *av, std::map <std::string, double> *db)
 {
 	std::ifstream data_bs("data.csv");
@@ -109,6 +122,7 @@ bool	input_parse(std::string key, std::string btc_n,std::string line)
 				if(DD>28)
 					return(false);
 			}
+			break;
 		default:
 			return(false);
 	}
@@ -118,7 +132,8 @@ bool	input_parse(std::string key, std::string btc_n,std::string line)
 bool start_matching(std::map <std::string, double> db,char *av)
 {
 	std::string line;
-	std::ifstream in(av); 
+	std::ifstream in(av);
+	double btc_number = -1;
 	
 	std::getline(in,line);
 	if(!check_first_line(line))
@@ -127,6 +142,11 @@ bool start_matching(std::map <std::string, double> db,char *av)
 		std::cerr << "Error: No dates in the input file!" << std::endl;
 	while (std::getline(in,line))
 	{
+		if(count_spaces(line.substr(0,line.find('|'))) > 1 || count_spaces(line.substr(line.find('|') + 1)) > 1)
+		{
+			std::cerr << "Error: Too many spaces!\n";
+			return(false);
+		}
 		std::string key = line.substr(0,line.find(' '));
 		std::string btc_n = ltrim(line.substr(line.find('|') + 1 ));
 		if(input_parse(key,btc_n,line) == false)
@@ -137,7 +157,7 @@ bool start_matching(std::map <std::string, double> db,char *av)
 				std::cerr << "Error: Bad input => " << line << std::endl;
 			continue;
 		}
-		double btc_number = strtod(btc_n.c_str(),NULL);
+		btc_number = strtod(btc_n.c_str(),NULL);
 		if(btc_number > 1000)
 		{
 			std::cerr << "Error: Too large a number.\n";
@@ -153,7 +173,7 @@ bool start_matching(std::map <std::string, double> db,char *av)
 		it--;
 		std::cout << btc_number * (*it).second << std::endl;
 	}
-	if(line.empty())
+	if(line.empty() && btc_number < 0)
 		std::cerr << "Error: No dates in the input file!\n";
 	return (true);
 }
