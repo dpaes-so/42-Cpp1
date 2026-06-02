@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/02 16:02:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/02 18:19:47 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,38 @@ std::string ltrim(const std::string& s)
     size_t pos = s.find_first_not_of(" \t\n\r\f\v"); 
     return (pos == std::string::npos) ? std::string() : s.substr(pos); 
 } 
+
+bool parse_date(int YY,int MM,int DD)
+{
+	if(YY > 9999 || YY < 0001|| MM > 12 || DD > 31 || DD < 1)
+		return(false);
+	switch (MM)
+	{
+		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+			if(DD > 31)
+				return (false);
+			break;
+		case 4: case 6: case 9: case 11:
+			if(DD > 30)
+				return (false);
+			break;
+		case 2:
+			if((YY % 400 == 0) ||(YY % 4 == 0 && YY % 100 != 0))
+			{
+				if(DD > 29)
+					return(false);
+			}
+			else
+			{
+				if(DD>28)
+					return(false);
+			}
+			break;
+		default:
+			return(false);
+	}
+	return(true);
+}
 
 int count_spaces(const std::string& s)
 {
@@ -55,6 +87,13 @@ bool first_parse(char *av, std::map <std::string, double> *db)
 		{
 			if(std::count(key.begin(),key.end(),'-') == 2 && std::count(s.begin(),s.end(),'.') <= 1)
 			{
+				int YY,MM,DD = 0;
+				std::string month = key.substr(key.find('-') + 1,key.find('-')).c_str();
+				YY = strtod(key.substr(0,key.find('-')).c_str(),NULL);
+				MM = strtod(month.c_str(),NULL);
+				DD = strtod(key.substr(key.find('-') + 4,key.find(' ')).c_str(),NULL);
+				if(parse_date(YY,MM,DD) == false)
+					continue;
 				double value = strtod(s.c_str(),NULL);
 				db->insert(std::make_pair(key,value));
 			}
@@ -76,7 +115,7 @@ bool check_first_line(std::string line)
 {
 	if("date | value" != line)
 	{
-		std::cerr << "Wrong input file header\n";
+		std::cerr << "Error: Wrong input file header\n";
 		return (false);
 	}
 	return (true);
@@ -99,34 +138,7 @@ bool	input_parse(std::string key, std::string btc_n,std::string line)
 	YY = strtod(key.substr(0,key.find('-')).c_str(),NULL);
 	MM = strtod(month.c_str(),NULL);
 	DD = strtod(key.substr(key.find('-') + 4,key.find(' ')).c_str(),NULL);
-	if(YY > 9999 || YY < 0001|| MM > 12 || DD > 31 || DD < 1)
-		return(false);
-	switch (MM)
-	{
-		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-			if(DD > 31)
-				return (false);
-			break;
-		case 4: case 6: case 9: case 11:
-			if(DD > 30)
-				return (false);
-			break;
-		case 2:
-			if((YY % 400 == 0) ||(YY % 4 == 0 && YY % 100 != 0))
-			{
-				if(DD > 29)
-					return(false);
-			}
-			else
-			{
-				if(DD>28)
-					return(false);
-			}
-			break;
-		default:
-			return(false);
-	}
-	return (true);
+	return(parse_date(YY,MM,DD));
 }
 
 bool start_matching(std::map <std::string, double> db,char *av)
@@ -142,10 +154,15 @@ bool start_matching(std::map <std::string, double> db,char *av)
 		std::cerr << "Error: No dates in the input file!" << std::endl;
 	while (std::getline(in,line))
 	{
-		if(count_spaces(line.substr(0,line.find('|'))) > 1 || count_spaces(line.substr(line.find('|') + 1)) > 1)
+		if(line.empty())
 		{
-			std::cerr << "Error: Too many spaces!\n";
-			return(false);
+			std::cerr << "Error: Empty line!\n";
+			continue;
+		}
+		if(count_spaces(line.substr(0,line.find('|'))) != 1 || count_spaces(line.substr(line.find('|') + 1)) != 1)
+		{
+			std::cerr << "Error: The should only be one space between the pipe and the input!\n";
+			continue;;
 		}
 		std::string key = line.substr(0,line.find(' '));
 		std::string btc_n = ltrim(line.substr(line.find('|') + 1 ));
