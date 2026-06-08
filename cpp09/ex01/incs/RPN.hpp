@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/08 15:08:24 by finn             ###   ########.fr       */
+/*   Updated: 2026/06/07 18:17:03 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,13 @@
 #define BITCOINEXCHANGE_HPP
 #include <iostream>
 #include <iomanip>
-# include <fstream>
-#include <vector>
-#include <map>
-#include <list>
-#include <algorithm>
+#include <fstream>
+# include <cstdlib>
+# include <stack>
+# include <cctype>
+# include <cstring>
+# include <sstream>
 
-std::string ltrim(const std::string& s);
-bool parse_date(int YY,int MM,int DD);
-int count_spaces(const std::string& s);
-bool first_parse(char *av, std::map <std::string, double> *db);
-void map_print(std::map <std::string, double> db);
-bool check_first_line(std::string line);
-bool	input_parse(std::string key, std::string btc_n,std::string line);
-bool start_matching(std::map <std::string, double> db,char *av);
 
 
 #endif
