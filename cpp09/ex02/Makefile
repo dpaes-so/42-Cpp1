@@ -6,14 +6,14 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 14:06:50 by dpaes-so          #+#    #+#              #
-#    Updated: 2026/06/16 17:52:39 by dpaes-so         ###   ########.fr        #
+#    Updated: 2026/06/18 19:00:39 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = PmergeMe
 
 CXX = c++
-CXXFLAGS = -g -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -g -std=c++98
 
 SRC = main.cpp
 SRCS_DIR = srcs

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/18 18:06:53 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/18 19:26:34 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,52 @@ void PmergeMe::vector_mergin()
 std::vector<size_t> PmergeMe::jacobas(size_t n)
 {
 	std::vector<size_t> seq;
+	seq.push_back(0);
 	seq.push_back(1);
-	seq.push_back(3);
 	if(3 > n )
+	{
+		for(size_t i = 0; i < seq.size(); i ++)
+			std::cout << seq[i] << " ";
+		std::cout << std::endl;
 		return seq; 
+	}
 	for (int i = 2; i ; ++i)
 	{
 		size_t seq_number =seq[i - 1] + 2 * seq[i - 2];
 		if(seq_number >= n )
 		{
 			seq.push_back(seq_number);
-			for(int i = 0; i < seq.size(); i ++)
-				std::cout << seq[i] << " ";
+			for(size_t i = 0; i < seq.size(); i ++)
+				std::cout << "order " <<seq[i] << " ";
+			std::cout << std::endl;
 			return seq; 
 		}
    		seq.push_back(seq_number);
     }
 	std::cout << std::endl;
 	return seq;
+}
+
+void PmergeMe::binarysearch_start(std::pair<int,int> &pair,std::vector<int> &main)
+{
+	size_t right = std::distance(main.begin(),std::find(main.begin(),main.end(),pair.second));
+	size_t left = 0;
+	std::cout << "first: " << pair.first << " " << "right: " << right << "(" << *(std::find(main.begin(),main.end(),pair.second)) << ")" << std::endl;
+	while (left <= right)
+	{
+		size_t middle = left + (right - left)/2;
+		std::cout << "Middle = " << middle << std::endl;
+		if(pair.first < main[middle])
+			right = middle - 1;
+		else
+			left = middle + 1;
+	}
+	std::cout << "I LEFT " << left  << std::endl;
+	main.insert(main.begin() + left,pair.first);
+	for(size_t i = 0;i < main.size();i++)
+		std::cout << main.at(i) << " ";
+	std::cout << "-------------------------------------------------------------------------------------------------\n";
+
 }
 void PmergeMe::Pmergevector()
 {
@@ -97,7 +125,7 @@ void PmergeMe::Pmergevector()
 	
 	print_vvp();
 	vector_mergin();
-	print_vvp();
+	// print_vvp();
 	
 	main.push_back(vp[0].first);
 	main.push_back(vp[0].second);
@@ -118,7 +146,22 @@ void PmergeMe::Pmergevector()
 	std::cout << std::endl;
 
 	seq = jacobas(pend.size());
-	
+	size_t last_order = 0;
+	for(size_t i= 0;i <seq.size();i++)
+	{
+		size_t order = seq[i];
+		if(order > pend.size())
+			order = pend.size();
+		std::cout << "order: " << order << std::endl;
+		while (order > last_order || i == 0)
+		{
+			binarysearch_start(pend[order],main);
+			order--;
+			if(i == 0)
+				break;
+		}
+		last_order = seq[i];
+	}
 	std::cout << "Sorted: ";
 	for(size_t i = 0;i < main.size();i++)
 		std::cout << main.at(i) << " ";
