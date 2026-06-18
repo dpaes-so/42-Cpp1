@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/16 15:25:18 by finn             ###   ########.fr       */
+/*   Updated: 2026/06/18 18:05:19 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@
 class PmergeMe
 {
     private:
-        std::vector<int> vec;
 		std::vector<std::pair<int, int> > vp;
         bool straggler;
         int _straggler;
+        void vector_mergin_recursive(std::vector<std::pair<int, int> > &vp,size_t left, size_t right);
+        void mergin_sort(std::vector<std::pair<int, int> > &vp,size_t left, size_t middle,size_t right);
+        std::vector<size_t> jacobas(size_t n);
     public:
+        void vector_mergin();
         void Pmergevector();
         void print_vvp();
         void parse_input(std::string s);

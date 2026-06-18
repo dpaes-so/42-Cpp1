@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/09 18:33:10 by finn             ###   ########.fr       */
+/*   Updated: 2026/06/11 15:15:02 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ bool calculator(std::string str,std::stack<int> &rpn)
 			rpn.push(a * b);
 			break;
 		default:
-			std::cout << "laranja\n";
 			break;
 	}
 	return true;
