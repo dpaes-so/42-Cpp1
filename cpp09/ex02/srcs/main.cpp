@@ -6,16 +6,11 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/18 19:26:34 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:22:57 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/PmergeMe.hpp"
-
-bool pair_snd_big_cmp(const std::pair<int,int>& a, const std::pair<int,int>& b)
-{
-    return a.second < b.second;
-}
 
 void PmergeMe::print_vvp()
 {
@@ -53,7 +48,6 @@ void PmergeMe::vector_mergin_recursive(std::vector<std::pair<int, int> > &vp,siz
 {
 	if(left >= right)
 		return ;
-
 	size_t middle = left + (right - left)/2;
 	vector_mergin_recursive(vp,left,middle);//left side of vector
 	vector_mergin_recursive(vp, middle + 1, right);//right side of vector
@@ -70,52 +64,60 @@ void PmergeMe::vector_mergin()
 std::vector<size_t> PmergeMe::jacobas(size_t n)
 {
 	std::vector<size_t> seq;
+	std::vector<size_t> true_seq;
 	seq.push_back(0);
 	seq.push_back(1);
 	if(3 > n )
-	{
-		for(size_t i = 0; i < seq.size(); i ++)
-			std::cout << seq[i] << " ";
-		std::cout << std::endl;
 		return seq; 
-	}
 	for (int i = 2; i ; ++i)
 	{
 		size_t seq_number =seq[i - 1] + 2 * seq[i - 2];
 		if(seq_number >= n )
 		{
 			seq.push_back(seq_number);
-			for(size_t i = 0; i < seq.size(); i ++)
-				std::cout << "order " <<seq[i] << " ";
-			std::cout << std::endl;
-			return seq; 
+			break;
 		}
    		seq.push_back(seq_number);
     }
-	std::cout << std::endl;
-	return seq;
+	for(size_t i = 0; i < seq.size();i++)
+	{
+		if(seq[i] == 0)
+			true_seq.push_back(0);
+		else if(seq[i] == 1)
+			continue;
+		else
+			true_seq.push_back(seq[i] - 1);
+	}
+	return true_seq;
 }
+
 
 void PmergeMe::binarysearch_start(std::pair<int,int> &pair,std::vector<int> &main)
 {
-	size_t right = std::distance(main.begin(),std::find(main.begin(),main.end(),pair.second));
+	size_t right;
+	if(pair.second != INT_MAX)
+		right = std::distance(main.begin(),std::find(main.begin(),main.end(),pair.second));
+	else
+		right = main.size() - 1;
 	size_t left = 0;
-	std::cout << "first: " << pair.first << " " << "right: " << right << "(" << *(std::find(main.begin(),main.end(),pair.second)) << ")" << std::endl;
 	while (left <= right)
 	{
 		size_t middle = left + (right - left)/2;
-		std::cout << "Middle = " << middle << std::endl;
 		if(pair.first < main[middle])
+		{
+			if(middle == 0)
+			{
+				left = 0;
+				break;
+			}
 			right = middle - 1;
+		}
 		else
+		{
 			left = middle + 1;
+		}
 	}
-	std::cout << "I LEFT " << left  << std::endl;
 	main.insert(main.begin() + left,pair.first);
-	for(size_t i = 0;i < main.size();i++)
-		std::cout << main.at(i) << " ";
-	std::cout << "-------------------------------------------------------------------------------------------------\n";
-
 }
 void PmergeMe::Pmergevector()
 {
@@ -123,36 +125,33 @@ void PmergeMe::Pmergevector()
 	std::vector<std::pair<int,int> > pend;
 	std::vector<size_t> seq;
 	
-	print_vvp();
+	if(vp.size() == 0)
+	{
+		main.push_back(_straggler);
+		std::cout << "Sorted: ";
+		for(size_t i = 0;i < main.size();i++)
+			std::cout << main.at(i) << " ";
+		std::cout << std::endl;
+		return;
+	}
 	vector_mergin();
-	// print_vvp();
-	
 	main.push_back(vp[0].first);
 	main.push_back(vp[0].second);
 	for (size_t i = 1; i < vp.size(); i++)
     	main.push_back(vp[i].second);
-	std::cout << std::endl;
 	for (size_t i = 1; i < vp.size(); i++)
     	pend.push_back(vp[i]);
 	if(straggler == true)
 		pend.push_back(std::make_pair(_straggler, __INT_MAX__));
-	std::cout << "Main: ";
-	for(size_t i = 0;i < main.size();i++)
-		std::cout << main.at(i) << " ";
-	std::cout << std::endl;
-	std::cout << "Pend: ";
-	for(size_t i = 0;i < pend.size();i++)
-		std::cout << pend[i].first << " ";
-	std::cout << std::endl;
-
 	seq = jacobas(pend.size());
 	size_t last_order = 0;
 	for(size_t i= 0;i <seq.size();i++)
 	{
+		if(pend.empty())
+			break;
 		size_t order = seq[i];
-		if(order > pend.size())
-			order = pend.size();
-		std::cout << "order: " << order << std::endl;
+		if(order >= pend.size())
+			order = pend.size() - 1;
 		while (order > last_order || i == 0)
 		{
 			binarysearch_start(pend[order],main);
