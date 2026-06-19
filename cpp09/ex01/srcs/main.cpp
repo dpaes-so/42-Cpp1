@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/11 15:15:02 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/19 17:38:52 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int main(int ac, char *av[])
 			if(rpn.size() == 1)
 				std::cout << rpn.top() << std::endl;
 			else
-				std::cerr << "Error: Extra numbers in the stack\n";
+				std::cerr << "Error: Wrong amount of numbers remaining in the stack\n";
 		}
 	}
 	else

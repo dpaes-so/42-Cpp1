@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/19 16:22:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/19 17:37:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ void PmergeMe::Pmergevector()
 	std::vector<std::pair<int,int> > pend;
 	std::vector<size_t> seq;
 	
+
+	_start_vector = clock();
 	if(vp.size() == 0)
 	{
 		main.push_back(_straggler);
@@ -161,21 +163,40 @@ void PmergeMe::Pmergevector()
 		}
 		last_order = seq[i];
 	}
+	clock_t duration = clock() - _start_vector;
+	std::cout << std::fixed << std::setprecision(5);
+	std::cout << "Duration: " << ((float)duration / CLOCKS_PER_SEC) *1000000.0 << " microseconds\n";
 	std::cout << "Sorted: ";
 	for(size_t i = 0;i < main.size();i++)
 		std::cout << main.at(i) << " ";
 	std::cout << std::endl;
 }
 
-void PmergeMe::parse_input(std::string s)
+bool PmergeMe::parse_input(char *av[])
 {
-    std::istringstream ss(s);
 	std::vector<int> vec;
-	
-    int x;
-    while (ss >> x)
-        vec.push_back(x);
-
+	std::string s;
+	std::string bigstring;
+	for(size_t i = 1;av[i];i++)
+	{
+		s = av[i];
+		if(s.find_first_of("\t\n\v\f\r ") != std::string::npos)
+		{
+			std::istringstream ss(av[i]);
+			while(ss >> bigstring)
+			{
+				if(bigstring.find_first_not_of("0123456789") != std::string::npos) 
+					return(false);
+				vec.push_back(atoi(bigstring.c_str()));
+			}
+			if(bigstring.empty())
+				return(false);
+			continue;
+		}
+		if(s.find_first_not_of("0123456789") != std::string::npos ||  s.empty())
+			return(false);
+		vec.push_back(atoi(s.c_str()));
+	}
     size_t i = 0;
     while (i + 1 < vec.size())
     {
@@ -195,17 +216,18 @@ void PmergeMe::parse_input(std::string s)
 	}
 	else
 		straggler = false;
-	
+	return(true);
 }
 
 int main(int ac, char *av[])
 {
-    if (ac == 2)
+    if (ac >= 2)
     {
         PmergeMe cmerge;
-
-        cmerge.parse_input(av[1]);
-        cmerge.Pmergevector();
+        if(cmerge.parse_input(av))
+       		cmerge.Pmergevector();
+		else
+			std::cerr << "Error: Bad input\n";
     }
     else
         std::cerr << "Invalid amount of arguments\n";
