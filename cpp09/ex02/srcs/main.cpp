@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/23 15:23:06 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/23 15:42:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,8 +218,8 @@ void PmergeMe::Pmergedeque()
 		}
 		last_order = seq[i];
 	}
-	clock_t end = clock();
-	_deq_duration = end- start;
+	clock_t end = std::clock();
+	_deq_duration = double(end - start) / CLOCKS_PER_SEC * 1000000.0;
 	sorted_deq = main;
 }
 
@@ -264,8 +264,8 @@ void PmergeMe::Pmergevector()
 		}
 		last_order = seq[i];
 	}
-	clock_t end = clock();
-	_vec_duration = end - start;
+	clock_t end = std::clock();
+	_vec_duration = double(end - start) / CLOCKS_PER_SEC * 1000000.0;
 	sorted_vec = main;
 }
 
@@ -326,9 +326,9 @@ void PmergeMe::print_output_vector()
 	// std::cout << sorted.at(i) << " ";
 	std::cout << std::endl;
 	std::cout << std::fixed << std::setprecision(5);
-	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector -> " << ((double)_vec_duration / CLOCKS_PER_SEC) *1000000.0;
+	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector -> " << _vec_duration; 
 	std::cout << std::endl;
-	std::cout << "Time to process a range of " << vec.size() << " elements with std::deque -> " <<  ((double)_deq_duration / CLOCKS_PER_SEC) *1000000.0;
+	std::cout << "Time to process a range of " << vec.size() << " elements with std::deque -> " <<  _deq_duration;
 	std::cout << std::endl;
 }
 

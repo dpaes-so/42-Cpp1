@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/23 15:10:36 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/23 15:27:52 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ class PmergeMe
         std::deque<int> sorted_deq;
         bool straggler;
         int _straggler;
-        clock_t _vec_duration;
-        clock_t _deq_duration;
+        double _vec_duration;
+        double _deq_duration;
         void vector_mergin_recursive(std::vector<std::pair<int, int> > &vp,size_t left, size_t right);
         void deque_mergin_recursive(std::deque<std::pair<int, int> > &dp,size_t left, size_t right);
 
