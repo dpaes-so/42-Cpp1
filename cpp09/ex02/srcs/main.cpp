@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/23 15:42:32 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/23 16:17:16 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,11 @@ void PmergeMe::vector_binarysearch_start(std::pair<int,int> &pair,std::vector<in
 	main.insert(main.begin() + left,pair.first);
 }
 
+double elapsed_microseconds(clock_t start, clock_t end)
+{
+    return (double)(end - start) * 1000000LL / CLOCKS_PER_SEC;
+}
+
 void PmergeMe::Pmergedeque()
 {
 	std::deque<int> main;
@@ -219,7 +224,7 @@ void PmergeMe::Pmergedeque()
 		last_order = seq[i];
 	}
 	clock_t end = std::clock();
-	_deq_duration = double(end - start) / CLOCKS_PER_SEC * 1000000.0;
+	_deq_duration = elapsed_microseconds(start,end);
 	sorted_deq = main;
 }
 
@@ -265,7 +270,7 @@ void PmergeMe::Pmergevector()
 		last_order = seq[i];
 	}
 	clock_t end = std::clock();
-	_vec_duration = double(end - start) / CLOCKS_PER_SEC * 1000000.0;
+	_vec_duration = elapsed_microseconds(start,end);
 	sorted_vec = main;
 }
 
@@ -319,11 +324,11 @@ void PmergeMe::print_output_vector()
 {
 	// std::cout << "Before: ";
 	// for(size_t i = 0;i < vec.size();i++)
-	// std::cout << vec.at(i) << " ";
+	// 	std::cout << vec.at(i) << " ";
 	// std::cout << std::endl;
-	// std::cout << "After: ";
-	// for(size_t i = 0;i < .size();i++)
-	// std::cout << sorted.at(i) << " ";
+	std::cout << "After: ";
+	for(size_t i = 0;i < sorted_deq.size();i++)
+		std::cout << sorted_deq.at(i) << " ";
 	std::cout << std::endl;
 	std::cout << std::fixed << std::setprecision(5);
 	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector -> " << _vec_duration; 
