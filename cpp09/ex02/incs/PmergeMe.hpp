@@ -1,62 +1,62 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/23 16:15:20 by dpaes-so         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef BITCOINEXCHANGE_HPP
 #define BITCOINEXCHANGE_HPP
 #include <iostream>
 #include <iomanip>
 # include <vector>
-# include <deque>
 # include <sstream>
 #include <fstream>
 #include <algorithm>
 #include <limits.h>
 #include <ctime>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <deque>
+#include <limits>
+#include <cstdlib>
+#include <algorithm>
+
+
+
+template <typename container>
+void    print_container(container &cont)
+{
+    typename container::iterator it;
+    it = cont.begin();
+    while(it != cont.end())
+    {
+        // std::cout << " (" << it->first << ", " << it->second << ") ";
+        std::cout << *it << " ";
+        ++it;
+    }
+    std::cout << std::endl;
+}
+
 
 class PmergeMe
 {
     private:
-		std::vector<std::pair<int, int> > vp;
-        std::deque<std::pair<int, int> > dp;
         std::vector<int> vec;
-        std::vector<int> sorted_vec;
-        std::deque<int> sorted_deq;
-        bool straggler;
-        int _straggler;
-        double _vec_duration;
-        double _deq_duration;
-        void vector_mergin_recursive(std::vector<std::pair<int, int> > &vp,size_t left, size_t right);
-        void deque_mergin_recursive(std::deque<std::pair<int, int> > &dp,size_t left, size_t right);
 
-        void vector_mergin_sort(std::vector<std::pair<int, int> > &vp,size_t left, size_t middle,size_t right);
-        void deque_mergin_sort(std::deque<std::pair<int, int> > &dp,size_t left, size_t middle,size_t right);
+        void    sort_rec(std::vector<int> &vec, size_t lvl, size_t p_num);
+        void    vector_mergin_recursive(std::vector<int> &vec,size_t numbers_per_pair);
+        void    vector_mergin_sort(size_t &numbers_per_pair,size_t &p_num);
 
-        std::vector<size_t> jacobas(size_t n);
-        
-        void vector_binarysearch_start(std::pair<int,int> &pair,std::vector<int> &main);
-        void deque_binarysearch_start(std::pair<int,int> &pair,std::deque<int> &main);
+        void    use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend,size_t    &p_num);
+        // Old functions (still declared if you still use them elsewhere)
+        void    vector_mergin_recursive(std::vector<std::pair<int, int> > &vp,size_t left, size_t right);
+        void    mergin_sort(std::vector<std::pair<int, int> > &vp,size_t left, size_t middle, size_t right);
 
-        void stop_timer_vec(std::vector<int> vec);
-        void stop_timer_deq(std::deque<int> dec);
+        size_t    binarysearch(std::vector<int> &main_chain, std::vector<int> &pend, int to_compare, int n_per_pair, size_t right);
+        std::vector<size_t> jacobsthal(size_t n);
+        size_t find_bound(const std::vector<int> &vec,int pend_last,size_t block_size);
+
+
     public:
-        void vector_mergin();
-        void deque_mergin();
-
-        void Pmergevector();
-        void Pmergedeque();
-        
-        void print_output_vector();
-        void print_vvp();
-        bool parse_input(char *av[]);
+        void    vector_mergin();
+        void    Pmergevector();
+        void    print_vvp();
+        void    print_output_vector();
+        bool    parse_input(char *av[]);
 };
-
 #endif

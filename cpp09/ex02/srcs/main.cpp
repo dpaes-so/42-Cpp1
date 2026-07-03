@@ -3,354 +3,253 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/23 16:17:16 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/07/03 17:46:16 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/PmergeMe.hpp"
 
-void PmergeMe::deque_mergin_sort(std::deque<std::pair<int, int> > &dp,size_t left, size_t middle,size_t right)
+void PmergeMe::sort_rec(std::vector<int> &vec,size_t lvl,size_t p_num)
 {
-	std::deque<std::pair<int, int > > temp;
-	
-	size_t i = left;
-	size_t j = middle + 1;
-	while(i <= middle && j <= right)
+	size_t	k = lvl - 1;
+	size_t	j = lvl * 2 -1;
+	size_t current_pair = 0;
+	// std::cout << "lvl = " << lvl << std::endl;
+	if(lvl == 1)
 	{
-		if(dp[i].second >= dp[j].second)
-			temp.push_back(dp[j++]);
-		else
-			temp.push_back(dp[i++]);
+		k = 0;
+		j = 1;
 	}
-
-	while (i <= middle)
-		temp.push_back(dp[i++]);//in u cant make a full pair with leftovers
-	while (j <= right)
-		temp.push_back(dp[j++]);
-	
-	for(size_t i = 0;i<temp.size();i++)
-		dp[left + i] = temp[i];
-}
-void PmergeMe::vector_mergin_sort(std::vector<std::pair<int, int> > &vp,size_t left, size_t middle,size_t right)
-{
-	std::vector<std::pair<int, int > > temp;
-	
-	size_t i = left;
-	size_t j = middle + 1;
-	while(i <= middle && j <= right)
+	// std::cout << "p_num = " << p_num << std::endl;
+	while(current_pair < p_num)
 	{
-		if(vp[i].second >= vp[j].second)
-			temp.push_back(vp[j++]);
-		else
-			temp.push_back(vp[i++]);
+		// print_container(vec);
+		// std::cout << "swapping this guy: " << vec.at(k) << " and this guy: " << vec.at(j) << " j = " << j << std::endl;
+		if(vec.at(k) > vec.at(j))
+		{
+			for(size_t i = 0;i < lvl;i++)
+			{
+				std::swap(vec[k - i],vec[ j -i]);
+			}
+		}
+		j += lvl * 2;
+		k +=lvl * 2;
+		current_pair++;
 	}
+}
 
-	while (i <= middle)
-		temp.push_back(vp[i++]);//in u cant make a full pair with leftovers
-	while (j <= right)
-		temp.push_back(vp[j++]);
+size_t PmergeMe::find_bound(const std::vector<int> &vec,int pend_last,size_t block_size)
+{
+    size_t i = 0;
+
+    while (i + block_size <= vec.size())
+    {
+        size_t last = i + block_size - 1;
+
+        if (vec[last] == pend_last)
+        {
+            // No partner block
+            if (i + block_size * 2 > vec.size())
+                return std::string::npos;
+
+            return i + block_size * 2 - 1;
+        }
+
+        i += block_size;
+    }
+
+    return std::string::npos;
+}
+
+size_t	PmergeMe::binarysearch(std::vector<int> &main_chain, std::vector<int> &pend, int to_compare, int n_per_pair, size_t right)
+{
+	(void)pend;
+	size_t left = 0;
+	while (left <= right)
+	{
+		size_t middle = (left + right) / 2;
+		size_t index = middle * n_per_pair + (n_per_pair - 1);
+		if(to_compare < main_chain[index])
+		{
+			if(middle == 0)
+			{
+				left = 0;
+				break;
+			}
+			right = middle - 1;
+		}
+		else
+		{
+			left = middle + 1;
+		}
+	}
+	// std::cout << "left: " << left << std::endl;
+	return (left);
+}
+
+void	PmergeMe::use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend,size_t	&p_num)
+{
+	std::vector<size_t> seq;
+	size_t	order = 0;
+	size_t	prev_order = 1;
+
+	std::cout << "----------------------------STARTING JACOBING----------------------------" << std::endl;
 	
-	for(size_t i = 0;i<temp.size();i++)
-		vp[left + i] = temp[i];
+	(void)main;
+	(void)pend;
+	(void)p_num;
+	(void)numbers_per_pair;
+	size_t pend_pairs = pend.size() / numbers_per_pair + 1;
+	seq = jacobsthal(pend_pairs);
+	std::cout << "jacobas  seq ->>>> ";
+	print_container(seq);
+	for(size_t i = 0; i < seq.size(); i++)
+	{
+		order = std::min(seq[i], pend_pairs);
+		for(size_t j = order; j > prev_order; j--)
+		{
+			int	current_pair = j - 2;
+			size_t right;
+			size_t left;
+			size_t idx = current_pair * numbers_per_pair + (numbers_per_pair - 1);
+			size_t bound_idx = find_bound(vec, pend[idx], numbers_per_pair);
+			if (bound_idx == std::string::npos)
+				right = main.size() / numbers_per_pair - 1;
+			else
+			{
+				int bound = vec[bound_idx];
+				right = std::distance(main.begin(),std::find(main.begin(), main.end(), bound))/numbers_per_pair;
+			}
+			left = binarysearch(main, pend, pend[idx], numbers_per_pair, right);
+			main.insert(main.begin() + left * numbers_per_pair, pend.begin() + idx - numbers_per_pair + 1, pend.begin() + idx + 1);
+			print_container(main);
+		}
+		prev_order = order;
+	}
 }
 
-void PmergeMe::deque_mergin_recursive(std::deque<std::pair<int, int> > &dp,size_t left, size_t right)
+void PmergeMe::vector_mergin_sort(size_t &numbers_per_pair,size_t	&p_num)
 {
-	if(left >= right)
+	std::vector<int> main;
+	std::vector<int> pend;
+
+	if(p_num == 2)
+		return;
+	size_t total_blocks = vec.size() / numbers_per_pair;
+	for (size_t block = 0; block < total_blocks; block++)
+	{
+		size_t start = block * numbers_per_pair;
+		size_t end = start + numbers_per_pair;
+
+		if (block == 0 || block == 1 || block % 2 == 1)
+			main.insert(main.end(),vec.begin() + start,vec.begin() + end);
+		else
+			pend.insert(pend.end(),vec.begin() + start,vec.begin() + end);
+	}
+	// std::cout << "n p papair: " << numbers_per_pair << " p num: " << p_num << std::endl;
+	std::cout << "MAIN ->>> ";
+	print_container(main);
+	std::cout << "Pend ->>> ";
+	print_container(pend);
+	std::cout << "Vec ->>> ";
+	print_container(vec);
+	std::cout << std::endl;
+	use_jacobsthal(numbers_per_pair,main,pend,p_num);
+	for(size_t i = 0; i < main.size();i++)
+		vec[i] = main[i];
+	std::cout << "---------------------------------------------------------------------------------------------------------------------\n";
+}
+
+void PmergeMe::vector_mergin_recursive(std::vector<int> &vec,size_t numbers_per_pair)
+{
+	size_t		p_num;
+
+	p_num = vec.size() / numbers_per_pair;
+	if (p_num <= 1)
 		return ;
-	size_t middle = left + (right - left)/2;
-	deque_mergin_recursive(dp,left,middle);//left side of deque
-	deque_mergin_recursive(dp, middle + 1, right);//right side of deque
-	deque_mergin_sort(dp,left,middle,right);
-}
-
-void PmergeMe::vector_mergin_recursive(std::vector<std::pair<int, int> > &vp,size_t left, size_t right)
-{
-	if(left >= right)
-		return ;
-	size_t middle = left + (right - left)/2;
-	vector_mergin_recursive(vp,left,middle);//left side of vector
-	vector_mergin_recursive(vp, middle + 1, right);//right side of vector
-	vector_mergin_sort(vp,left,middle,right);
-}
-
-void PmergeMe::deque_mergin()
-{
-	if(dp.size() < 2)
-	 	return ;
-	deque_mergin_recursive(dp,0,dp.size() - 1);
+	sort_rec(vec, numbers_per_pair,p_num/2);
+	vector_mergin_recursive(vec, numbers_per_pair * 2);
+	vector_mergin_sort(numbers_per_pair,p_num);
 }
 
 void PmergeMe::vector_mergin()
 {
-	if(vp.size() < 2)
-	 	return ;
-	vector_mergin_recursive(vp,0,vp.size() - 1);
+	if (vec.size() < 2)
+		return ;
+	vector_mergin_recursive(vec, 1);
 }
 
-std::vector<size_t> PmergeMe::jacobas(size_t n)
+std::vector<size_t> PmergeMe::jacobsthal(size_t n)
 {
+	size_t	num;
 	std::vector<size_t> seq;
-	std::vector<size_t> true_seq;
-	seq.push_back(0);
-	seq.push_back(1);
-	if(3 > n )
-		return seq; 
-	for (int i = 2; i ; ++i)
+	seq.push_back(3);
+	if (n <= 2)
+		return (seq);
+	seq.push_back(5);
+	if (n <= 5)
+		return (seq);
+	for(int i = 2; i; i++)
 	{
-		size_t seq_number =seq[i - 1] + 2 * seq[i - 2];
-		if(seq_number >= n )
+		num = seq[i - 1] + 2 * seq[i - 2];
+		if (num >= n)
 		{
-			seq.push_back(seq_number);
-			break;
+			seq.push_back(num);
+			break ;
 		}
-   		seq.push_back(seq_number);
-    }
-	for(size_t i = 0; i < seq.size();i++)
-	{
-		if(seq[i] == 0)
-			true_seq.push_back(0);
-		else if(seq[i] == 1)
-			continue;
-		else
-			true_seq.push_back(seq[i] - 1);
+		seq.push_back(num);
 	}
-	return true_seq;
-}
-
-void PmergeMe::deque_binarysearch_start(std::pair<int,int> &pair,std::deque<int> &main)
-{
-	size_t right;
-	if(pair.second != INT_MAX)
-		right = std::distance(main.begin(),std::find(main.begin(),main.end(),pair.second));
-	else
-		right = main.size() - 1;
-	size_t left = 0;
-	while (left <= right)
-	{
-		size_t middle = left + (right - left)/2;
-		if(pair.first < main[middle])
-		{
-			if(middle == 0)
-			{
-				left = 0;
-				break;
-			}
-			right = middle - 1;
-		}
-		else
-		{
-			left = middle + 1;
-		}
-	}
-	main.insert(main.begin() + left,pair.first);
-}
-
-void PmergeMe::vector_binarysearch_start(std::pair<int,int> &pair,std::vector<int> &main)
-{
-	size_t right;
-	if(pair.second != INT_MAX)
-		right = std::distance(main.begin(),std::find(main.begin(),main.end(),pair.second));
-	else
-		right = main.size() - 1;
-	size_t left = 0;
-	while (left <= right)
-	{
-		size_t middle = left + (right - left)/2;
-		if(pair.first < main[middle])
-		{
-			if(middle == 0)
-			{
-				left = 0;
-				break;
-			}
-			right = middle - 1;
-		}
-		else
-		{
-			left = middle + 1;
-		}
-	}
-	main.insert(main.begin() + left,pair.first);
-}
-
-double elapsed_microseconds(clock_t start, clock_t end)
-{
-    return (double)(end - start) * 1000000LL / CLOCKS_PER_SEC;
-}
-
-void PmergeMe::Pmergedeque()
-{
-	std::deque<int> main;
-	std::deque<std::pair<int,int> > pend;
-	std::vector<size_t> seq;
-	
-
-	clock_t start = clock();
-	if(dp.size() == 0)
-	{
-		main.push_back(_straggler);
-		_deq_duration = clock() - start;
-		sorted_deq = main;
-	}
-	deque_mergin();
-	main.push_back(dp[0].first);
-	main.push_back(dp[0].second);
-	for (size_t i = 1; i < dp.size(); i++)
-    	main.push_back(dp[i].second);
-	for (size_t i = 1; i < dp.size(); i++)
-    	pend.push_back(dp[i]);
-	if(straggler == true)
-		pend.push_back(std::make_pair(_straggler, __INT_MAX__));
-	seq = jacobas(pend.size());
-	size_t last_order = 0;
-	for(size_t i= 0;i <seq.size();i++)
-	{
-		if(pend.empty())
-			break;
-		size_t order = seq[i];
-		if(order >= pend.size())
-			order = pend.size() - 1;
-		while (order > last_order || i == 0)
-		{
-			deque_binarysearch_start(pend[order],main);
-			order--;
-			if(i == 0)
-				break;
-		}
-		last_order = seq[i];
-	}
-	clock_t end = std::clock();
-	_deq_duration = elapsed_microseconds(start,end);
-	sorted_deq = main;
+	return (seq);
 }
 
 void PmergeMe::Pmergevector()
 {
-	std::vector<int> main;
-	std::vector<std::pair<int,int> > pend;
-	std::vector<size_t> seq;
-	
-
-	clock_t start = clock();
-	if(vp.size() == 0)
-	{
-		main.push_back(_straggler);
-		_vec_duration = clock() - start;
-		sorted_vec = main;
-	}
 	vector_mergin();
-	main.push_back(vp[0].first);
-	main.push_back(vp[0].second);
-	for (size_t i = 1; i < vp.size(); i++)
-    	main.push_back(vp[i].second);
-	for (size_t i = 1; i < vp.size(); i++)
-    	pend.push_back(vp[i]);
-	if(straggler == true)
-		pend.push_back(std::make_pair(_straggler, __INT_MAX__));
-	seq = jacobas(pend.size());
-	size_t last_order = 0;
-	for(size_t i= 0;i <seq.size();i++)
-	{
-		if(pend.empty())
-			break;
-		size_t order = seq[i];
-		if(order >= pend.size())
-			order = pend.size() - 1;
-		while (order > last_order || i == 0)
-		{
-			vector_binarysearch_start(pend[order],main);
-			order--;
-			if(i == 0)
-				break;
-		}
-		last_order = seq[i];
-	}
-	clock_t end = std::clock();
-	_vec_duration = elapsed_microseconds(start,end);
-	sorted_vec = main;
 }
 
 bool PmergeMe::parse_input(char *av[])
 {
 	std::string s;
 	std::string bigstring;
-	for(size_t i = 1;av[i];i++)
+	for (size_t i = 1; av[i]; i++)
 	{
 		s = av[i];
-		if(s.find_first_of("\t\n\v\f\r ") != std::string::npos)
+		if (s.find_first_of("\t\n\v\f\r ") != std::string::npos)
 		{
 			std::istringstream ss(av[i]);
-			while(ss >> bigstring)
+			while (ss >> bigstring)
 			{
-				if(bigstring.find_first_not_of("0123456789") != std::string::npos) 
-					return(false);
+				if (bigstring.find_first_not_of("0123456789") != std::string::npos)
+					return (false);
 				vec.push_back(atoi(bigstring.c_str()));
 			}
-			if(bigstring.empty())
-				return(false);
-			continue;
+			if (bigstring.empty())
+				return (false);
+			continue ;
 		}
-		if(s.find_first_not_of("0123456789") != std::string::npos ||  s.empty())
-			return(false);
+		if (s.find_first_not_of("0123456789") != std::string::npos || s.empty())
+			return (false);
 		vec.push_back(atoi(s.c_str()));
 	}
-    size_t i = 0;
-    while (i + 1 < vec.size())
-    {
-        int a = vec[i];
-        int b = vec[i + 1];
+	return (true);
+}
 
-        if (a > b)
-            std::swap(a, b);
-        dp.push_back(std::make_pair(a, b));
-        vp.push_back(std::make_pair(a, b));
-        i += 2;
-    }
-	if(vec.size() % 2 != 0)
+int	main(int ac, char *av[])
+{
+	PmergeMe	cmerge;
+
+	if (ac >= 2)
 	{
-		straggler = true;
-		_straggler = vec.back();
-	}
-	else
-		straggler = false;
-	return(true);
-}
-
-void PmergeMe::print_output_vector()
-{
-	// std::cout << "Before: ";
-	// for(size_t i = 0;i < vec.size();i++)
-	// 	std::cout << vec.at(i) << " ";
-	// std::cout << std::endl;
-	std::cout << "After: ";
-	for(size_t i = 0;i < sorted_deq.size();i++)
-		std::cout << sorted_deq.at(i) << " ";
-	std::cout << std::endl;
-	std::cout << std::fixed << std::setprecision(5);
-	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector -> " << _vec_duration; 
-	std::cout << std::endl;
-	std::cout << "Time to process a range of " << vec.size() << " elements with std::deque -> " <<  _deq_duration;
-	std::cout << std::endl;
-}
-
-int main(int ac, char *av[])
-{
-    if (ac >= 2)
-    {
-        PmergeMe cmerge;
-        if(cmerge.parse_input(av))
+		if (cmerge.parse_input(av))
 		{
 			cmerge.Pmergevector();
-			cmerge.Pmergedeque();
-			cmerge.print_output_vector();
 		}
 		else
 			std::cerr << "Error: Bad input\n";
-    }
-    else
-        std::cerr << "Invalid amount of arguments\n";
+	}
+	else
+		std::cerr << "Invalid amount of arguments\n";
 }
