@@ -6,7 +6,7 @@
 #    By: finn <finn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 14:06:50 by dpaes-so          #+#    #+#              #
-#    Updated: 2026/06/07 15:34:55 by finn             ###   ########.fr        #
+#    Updated: 2026/07/06 00:48:19 by finn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = RPN
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g -std=c++98
 
-SRC = main.cpp
+SRC = main.cpp RPN.cpp
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SRC))
 
