@@ -6,7 +6,7 @@
 /*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/07/06 02:18:32 by finn             ###   ########.fr       */
+/*   Updated: 2026/07/06 02:29:22 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,9 @@ size_t PmergeMe::find_bound_deq(const std::deque<int> &deq, int pend_last,size_t
 	return (std::string::npos);
 }
 
-size_t	PmergeMe::binarysearch_deq(std::deque<int> &main_chain,std::deque<int> &pend,int to_compare,int n_per_pair,size_t right)
+size_t	PmergeMe::binarysearch_deq(std::deque<int> &main_chain,int to_compare,int n_per_pair,size_t right)
 {
-	(void)pend;
-
 	size_t left = 0;
-
 	while (left <= right)
 	{
 		size_t middle = (left + right) / 2;
@@ -112,7 +109,7 @@ void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair,std::deque<int> &main
 
 				right = std::distance(main.begin(),std::find(main.begin(), main.end(), bound))/ numbers_per_pair;
 			}
-			left = binarysearch_deq(main,pend,pend[idx],numbers_per_pair,right);
+			left = binarysearch_deq(main,pend[idx],numbers_per_pair,right);
 			main.insert(main.begin() + left * numbers_per_pair,pend.begin() + idx - numbers_per_pair + 1,pend.begin() + idx + 1);
 		}
 		prev_order = order;
@@ -164,9 +161,9 @@ void PmergeMe::deque_mergin()
 void PmergeMe::Pmergedeque()
 {
 	deque_mergin();
-	// std::cout << "Deque: ";
-	// print_container(deq);
-	// std::cout << std::endl;
+	std::cout << "Deque: ";
+	print_container(deq);
+	std::cout << std::endl;
 }
 //DIVIDING
 std::vector<size_t> PmergeMe::jacobsthal(size_t n)
@@ -239,9 +236,8 @@ size_t PmergeMe::find_bound(const std::vector<int> &vec,int pend_last,size_t blo
     return std::string::npos;
 }
 
-size_t	PmergeMe::binarysearch(std::vector<int> &main_chain, std::vector<int> &pend, int to_compare, int n_per_pair, size_t right)
+size_t	PmergeMe::binarysearch(std::vector<int> &main_chain,int to_compare, int n_per_pair, size_t right)
 {
-	(void)pend;
 	size_t left = 0;
 	while (left <= right)
 	{
@@ -293,7 +289,7 @@ void	PmergeMe::use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, 
 				int bound = vec[bound_idx];
 				right = std::distance(main.begin(),std::find(main.begin(), main.end(), bound))/numbers_per_pair;
 			}
-			left = binarysearch(main, pend, pend[idx], numbers_per_pair, right);
+			left = binarysearch(main, pend[idx], numbers_per_pair, right);
 			main.insert(main.begin() + left * numbers_per_pair, pend.begin() + idx - numbers_per_pair + 1, pend.begin() + idx + 1);
 		}
 		prev_order = order;
@@ -345,9 +341,9 @@ void PmergeMe::vector_mergin()
 void PmergeMe::Pmergevector()
 {
 	vector_mergin();
-	// std::cout << "Vector: ";
-	// print_container(vec);
-	// std::cout << std::endl;
+	std::cout << "Vector: ";
+	print_container(vec);
+	std::cout << std::endl;
 }
 
 bool PmergeMe::parse_input(char *av[])
@@ -401,7 +397,7 @@ int	main(int ac, char *av[])
 		if (cmerge.parse_input(av))
 		{
 			start = clock();
-			cmerge.Pmergedeque();
+			cmerge.Pmergevector();
 			end = clock();
 			double vector_time = static_cast<double>(end - start)* 1000000.0 / CLOCKS_PER_SEC;
 			
