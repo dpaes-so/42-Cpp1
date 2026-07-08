@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:09:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/08 15:07:38 by finn             ###   ########.fr       */
+/*   Updated: 2026/07/08 16:18:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ bool first_parse(char *av, std::map <std::string, double> *db)
 	{
 		std::cerr << "Could not open the data.csv file\n";
 		return(false);
-	}
-	std::map<std::string, double>::iterator it;
+	} 
 	while(std::getline(data_bs,str))
 	{
 		std::string key = str.substr(0,str.find(','));
@@ -161,7 +160,7 @@ bool start_matching(std::map <std::string, double> db,char *av)
 		}
 		if(count_spaces(line.substr(0,line.find('|'))) != 1 || count_spaces(line.substr(line.find('|') + 1)) != 1)
 		{
-			std::cerr << "Error: The should only be one space between the pipe and the input!\n";
+			std::cerr << "Error: Too many spaces!\n";
 			continue;;
 		}
 		std::string key = line.substr(0,line.find(' '));
