@@ -2,9 +2,9 @@
 
 bool calculator(std::string str,std::stack<int> &rpn)
 {
-    int a = rpn.top();
-	rpn.pop();
 	int b = rpn.top();
+	rpn.pop();
+    int a = rpn.top();
 	rpn.pop();
 	switch (str[0])
 	{

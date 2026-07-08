@@ -51,6 +51,10 @@ class PmergeMe
         std::vector<size_t>jacobsthal(size_t n);
 
     public:
+        PmergeMe();
+        PmergeMe(const PmergeMe &obj);
+		PmergeMe &operator=(const PmergeMe &obj);
+		~PmergeMe();
         bool parse_input(char *av[]);
         void Pmergevector();
         void Pmergedeque();
