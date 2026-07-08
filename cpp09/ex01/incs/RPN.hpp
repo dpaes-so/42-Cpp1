@@ -6,7 +6,7 @@
 /*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/07 18:17:03 by finn             ###   ########.fr       */
+/*   Updated: 2026/07/08 03:22:06 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@
 # include <cstring>
 # include <sstream>
 
-
+bool read_input(std::string input,std::stack<int> &rpn);
 
 #endif

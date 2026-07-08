@@ -1,7 +1,11 @@
+#include "../incs/RPN.hpp"
+
 bool calculator(std::string str,std::stack<int> &rpn)
 {
-	int b = rpn.top(); rpn.pop();
-    int a = rpn.top(); rpn.pop();
+    int a = rpn.top();
+	rpn.pop();
+	int b = rpn.top();
+	rpn.pop();
 	switch (str[0])
 	{
 		case '+':
@@ -14,7 +18,7 @@ bool calculator(std::string str,std::stack<int> &rpn)
 			if(b == 0)
 			{
 				std::cerr << "Error: Division by 0\n";
-				return false;
+				return (false);
 			}
 			rpn.push(a / b);
 			break;
@@ -24,8 +28,9 @@ bool calculator(std::string str,std::stack<int> &rpn)
 		default:
 			break;
 	}
-	return true;
+	return (true);
 }
+
 bool read_input(std::string input,std::stack<int> &rpn)
 {
 	std::istringstream in(input);
@@ -43,7 +48,7 @@ bool read_input(std::string input,std::stack<int> &rpn)
 			if(rpn.size() < 2)
 			{
 				std::cerr << "Error: Impossible to make at least one operation\n";
-				return false;
+				return (false);
 			}
 			if(!calculator(str,rpn))
 				return(false);
@@ -53,8 +58,8 @@ bool read_input(std::string input,std::stack<int> &rpn)
 		else
 		{
 			std::cerr << "Error: Invalid argument\n";
-			return false;
+			return (false);
 		}
 	}
-	return true;
+	return (true);
 }

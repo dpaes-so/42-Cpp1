@@ -6,7 +6,7 @@
 /*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/07/08 01:30:43 by finn             ###   ########.fr       */
+/*   Updated: 2026/07/08 02:00:18 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,6 @@ void PmergeMe::sort_rec_deq(std::deque<int> &deq, size_t lvl, size_t p_num)
 	}
 }
 
-size_t PmergeMe::find_bound_deq(const std::deque<int> &deq, int pend_last,size_t block_size)
-{
-	size_t i = 0;
-
-	while (i + block_size <= deq.size())
-	{
-		size_t last = i + block_size - 1;
-
-		if (deq[last] == pend_last)
-		{
-			if (i + block_size * 2 > deq.size())
-				return std::string::npos;
-			return (i + block_size * 2 - 1);
-		}
-		i += block_size;
-	}
-	return (std::string::npos);
-}
-
 size_t	PmergeMe::binarysearch_deq(std::deque<int> &main_chain,int to_compare,int n_per_pair,size_t right)
 {
 	size_t left = 0;
@@ -78,7 +59,17 @@ size_t	PmergeMe::binarysearch_deq(std::deque<int> &main_chain,int to_compare,int
 	return (left);
 }
 
-void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair,std::deque<int> &main,std::deque<int> &pend,size_t &p_num)
+size_t PmergeMe::find_bound_id_deq(const std::deque<size_t> &main_id, size_t pend_id)
+{
+	for (size_t i = 0; i < main_id.size(); i++)
+	{
+		if (main_id[i] == pend_id + 1)
+			return (i);
+	}
+	return (std::string::npos);
+}
+
+void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &main, std::deque<int> &pend, std::deque<size_t> &main_id, std::deque<size_t> &pend_id, size_t &p_num)
 {
 	std::vector<size_t> seq;
 	size_t	order = 0;
@@ -100,17 +91,14 @@ void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair,std::deque<int> &main
 			size_t right;
 			size_t left;
 			size_t idx = current_pair * numbers_per_pair +(numbers_per_pair - 1);
-			size_t bound_idx = find_bound_deq(deq,pend[idx],numbers_per_pair);
+			size_t bound_idx = find_bound_id_deq(main_id, pend_id[current_pair]);
 			if (bound_idx == std::string::npos)
 				right = main.size() / numbers_per_pair - 1;
 			else
-			{
-				int bound = deq[bound_idx];
-
-				right = std::distance(main.begin(),std::find(main.begin(), main.end(), bound))/ numbers_per_pair;
-			}
+				right = bound_idx;
 			left = binarysearch_deq(main,pend[idx],numbers_per_pair,right);
 			main.insert(main.begin() + left * numbers_per_pair,pend.begin() + idx - numbers_per_pair + 1,pend.begin() + idx + 1);
+			main_id.insert(main_id.begin() + left,pend_id[current_pair]);
 		}
 		prev_order = order;
 	}
@@ -120,7 +108,9 @@ void PmergeMe::deque_mergin_sort(size_t &numbers_per_pair, size_t &p_num)
 {
 	std::deque<int> main;
 	std::deque<int> pend;
-
+	std::deque<size_t> main_id;
+	std::deque<size_t> pend_id;
+	size_t id = 0;
 	if (p_num == 2)
 		return;
 	size_t total_blocks = deq.size() / numbers_per_pair;
@@ -130,11 +120,18 @@ void PmergeMe::deque_mergin_sort(size_t &numbers_per_pair, size_t &p_num)
 		size_t end = start + numbers_per_pair;
 
 		if (block == 0 || block == 1 || block % 2 == 1)
+		{
 			main.insert(main.end(), deq.begin() + start, deq.begin() + end);
+			 main_id.push_back(id);
+		}
 		else
+		{
 			pend.insert(pend.end(), deq.begin() + start, deq.begin() + end);
+			pend_id.push_back(id);
+		}
+		id++;
 	}
-	use_jacobsthal_deq(numbers_per_pair, main, pend, p_num);
+	use_jacobsthal_deq(numbers_per_pair,main,pend,main_id, pend_id,p_num);
 	for (size_t i = 0; i < main.size(); i++)
 		deq[i] = main[i];
 }
@@ -213,27 +210,6 @@ void PmergeMe::sort_rec(std::vector<int> &vec,size_t lvl,size_t p_num)
 		k +=lvl * 2;
 		current_pair++;
 	}
-}
-
-size_t PmergeMe::find_bound(const std::vector<int> &vec,int pend_last,size_t block_size)
-{
-    size_t i = 0;
-
-    while (i + block_size <= vec.size())
-    {
-        size_t last = i + block_size - 1;
-
-        if (vec[last] == pend_last)
-        {
-            if (i + block_size * 2 > vec.size())
-                return std::string::npos;
-
-            return i + block_size * 2 - 1;
-        }
-
-        i += block_size;
-    }
-    return std::string::npos;
 }
 
 size_t	PmergeMe::binarysearch(std::vector<int> &main_chain,int to_compare, int n_per_pair, size_t right)
@@ -321,10 +297,10 @@ void PmergeMe::vector_mergin_sort(size_t &numbers_per_pair,size_t	&p_num)
 
 		if (block == 0 || block == 1 || block % 2 == 1)
 		{
-			std::cout << "Adding block: ";
-			for (size_t i = start; i < end; i++)
-				std::cout << vec[i] << " ";
-			std::cout << std::endl;
+			// std::cout << "Adding block: ";
+			// for (size_t i = start; i < end; i++)
+			// 	std::cout << vec[i] << " ";
+			// std::cout << std::endl;
 			main.insert(main.end(),vec.begin() + start,vec.begin() + end);
 			main_id.push_back(id);
 		}
@@ -423,7 +399,7 @@ int	main(int ac, char *av[])
 			double vector_time = static_cast<double>(end - start)* 1000000.0 / CLOCKS_PER_SEC;
 			
 			start = clock();
-			// cmerge.Pmergedeque();
+			cmerge.Pmergedeque();
 			end = clock();
 			double deque_time = static_cast<double>(end - start)* 1000000.0 / CLOCKS_PER_SEC;
 			std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector : " << vector_time << " us" << std::endl;

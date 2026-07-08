@@ -37,14 +37,16 @@ class PmergeMe
         void	vector_mergin_sort(size_t &numbers_per_pair,size_t &p_num);
         void	deque_mergin_sort(size_t &numbers_per_pair,size_t &p_num);
 
-        void use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend, std::vector<size_t> &main_id, std::vector<size_t> &pend_id, size_t &p_num);        void	use_jacobsthal_deq(size_t &numbers_per_pair,std::deque<int> &main,std::deque<int> &pend,size_t &p_num);
+        void use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend, std::vector<size_t> &main_id, std::vector<size_t> &pend_id, size_t &p_num);
+        void use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &main, std::deque<int> &pend, std::deque<size_t> &main_id, std::deque<size_t> &pend_id, size_t &p_num);
+
 
         size_t	binarysearch(std::vector<int> &main_chain,int to_compare,int n_per_pair,size_t right);
         size_t	binarysearch_deq(std::deque<int> &main_chain,int to_compare,int n_per_pair,size_t right);
 
         size_t find_bound_id(const std::vector<size_t> &main_id, size_t pend_id);
-        size_t	find_bound(const std::vector<int> &vec,int pend_last,size_t block_size);
-        size_t	find_bound_deq(const std::deque<int> &deq,int pend_last,size_t block_size);
+        size_t find_bound_id_deq(const std::deque<size_t> &main_id, size_t pend_id);
+
 
         std::vector<size_t>jacobsthal(size_t n);
 
