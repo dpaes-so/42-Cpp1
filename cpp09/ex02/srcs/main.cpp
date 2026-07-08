@@ -6,7 +6,7 @@
 /*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:57:20 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/07/06 02:29:22 by finn             ###   ########.fr       */
+/*   Updated: 2026/07/08 01:30:43 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,8 +260,7 @@ size_t	PmergeMe::binarysearch(std::vector<int> &main_chain,int to_compare, int n
 	return (left);
 }
 
-void	PmergeMe::use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend,size_t	&p_num)
-{
+void PmergeMe::use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend, std::vector<size_t> &main_id, std::vector<size_t> &pend_id, size_t &p_num){
 	std::vector<size_t> seq;
 	size_t	order = 0;
 	size_t	prev_order = 1;
@@ -281,19 +280,27 @@ void	PmergeMe::use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, 
 			size_t right;
 			size_t left;
 			size_t idx = current_pair * numbers_per_pair + (numbers_per_pair - 1);
-			size_t bound_idx = find_bound(vec, pend[idx], numbers_per_pair);
+			size_t bound_idx = find_bound_id(main_id, pend_id[current_pair]);
 			if (bound_idx == std::string::npos)
 				right = main.size() / numbers_per_pair - 1;
 			else
-			{
-				int bound = vec[bound_idx];
-				right = std::distance(main.begin(),std::find(main.begin(), main.end(), bound))/numbers_per_pair;
-			}
+				right = bound_idx;
 			left = binarysearch(main, pend[idx], numbers_per_pair, right);
 			main.insert(main.begin() + left * numbers_per_pair, pend.begin() + idx - numbers_per_pair + 1, pend.begin() + idx + 1);
+			main_id.insert(main_id.begin() + left, pend_id[current_pair]);
 		}
 		prev_order = order;
 	}
+}
+
+size_t PmergeMe::find_bound_id(const std::vector<size_t> &main_id, size_t pend_id)
+{
+	for (size_t i = 0; i < main_id.size(); i++)
+	{
+		if (main_id[i] == pend_id + 1)
+			return (i);
+	}
+	return (std::string::npos);
 }
 
 void PmergeMe::vector_mergin_sort(size_t &numbers_per_pair,size_t	&p_num)
@@ -303,6 +310,9 @@ void PmergeMe::vector_mergin_sort(size_t &numbers_per_pair,size_t	&p_num)
 
 	if(p_num == 2)
 		return;
+	std::vector<size_t> main_id;
+	std::vector<size_t> pend_id;
+	size_t id = 0;
 	size_t total_blocks = vec.size() / numbers_per_pair;
 	for (size_t block = 0; block < total_blocks; block++)
 	{
@@ -310,11 +320,22 @@ void PmergeMe::vector_mergin_sort(size_t &numbers_per_pair,size_t	&p_num)
 		size_t end = start + numbers_per_pair;
 
 		if (block == 0 || block == 1 || block % 2 == 1)
+		{
+			std::cout << "Adding block: ";
+			for (size_t i = start; i < end; i++)
+				std::cout << vec[i] << " ";
+			std::cout << std::endl;
 			main.insert(main.end(),vec.begin() + start,vec.begin() + end);
+			main_id.push_back(id);
+		}
 		else
+		{
 			pend.insert(pend.end(),vec.begin() + start,vec.begin() + end);
+			pend_id.push_back(id);
+		}
+		id++;
 	}
-	use_jacobsthal(numbers_per_pair,main,pend,p_num);
+	use_jacobsthal(numbers_per_pair, main, pend, main_id, pend_id, p_num);
 	for(size_t i = 0; i < main.size();i++)
 		vec[i] = main[i];
 }
@@ -365,8 +386,8 @@ bool PmergeMe::parse_input(char *av[])
 
 				if (*end != '\0' || value < 0 || value > INT_MAX)
 					return (false);
-				if (std::find(vec.begin(), vec.end(), value) != vec.end())
-					return (false);
+				// if (std::find(vec.begin(), vec.end(), value) != vec.end())
+					// return (false);
 				vec.push_back(static_cast<int>(value));
 				deq.push_back(static_cast<int>(value));
 			}
@@ -377,8 +398,8 @@ bool PmergeMe::parse_input(char *av[])
 		value = std::strtol(s.c_str(), &end, 10);
 		if (*end != '\0' || value < 0 || value > INT_MAX)
 			return (false);
-		if (std::find(vec.begin(), vec.end(), value) != vec.end())
-			return (false);
+		// if (std::find(vec.begin(), vec.end(), value) != vec.end())
+		// 	return (false);
 
 		vec.push_back(static_cast<int>(value));
 		deq.push_back(static_cast<int>(value));
@@ -402,7 +423,7 @@ int	main(int ac, char *av[])
 			double vector_time = static_cast<double>(end - start)* 1000000.0 / CLOCKS_PER_SEC;
 			
 			start = clock();
-			cmerge.Pmergedeque();
+			// cmerge.Pmergedeque();
 			end = clock();
 			double deque_time = static_cast<double>(end - start)* 1000000.0 / CLOCKS_PER_SEC;
 			std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector : " << vector_time << " us" << std::endl;
