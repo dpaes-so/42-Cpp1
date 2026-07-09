@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 16:25:02 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/07/08 17:17:42 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:59:54 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &mai
 
 		for (size_t j = order; j > prev_order; j--)
 		{
-			int current_pair = j - 2;
+			size_t current_pair = j - 2;
 			size_t right;
 			size_t left;
 			size_t idx = current_pair * numbers_per_pair +(numbers_per_pair - 1);
@@ -119,7 +119,15 @@ void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &mai
 			else
 				right = bound_idx;
 			left = binarysearch_deq(main,pend[idx],numbers_per_pair,right);
-			main.insert(main.begin() + left * numbers_per_pair,pend.begin() + idx - numbers_per_pair + 1,pend.begin() + idx + 1);
+		
+			std::deque<int>::iterator pos = main.begin() + left * numbers_per_pair;
+			size_t first = idx - numbers_per_pair + 1;
+			size_t last = idx + 1;
+			for (size_t i = first; i < last; i++)
+			{
+				pos = main.insert(pos, pend[i]);
+				++pos;
+			}
 			main_id.insert(main_id.begin() + left,pend_id[current_pair]);
 		}
 		prev_order = order;
@@ -181,8 +189,8 @@ void PmergeMe::deque_mergin()
 void PmergeMe::Pmergedeque()
 {
 	deque_mergin();
-	std::cout << "Deque: ";
-	print_container(deq);
+	// std::cout << "Deque: ";
+	// print_container(deq);
 	std::cout << std::endl;
 }
 //DIVIDING
