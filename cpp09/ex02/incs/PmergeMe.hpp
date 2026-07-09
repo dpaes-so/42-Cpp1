@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/09 13:49:30 by dpaes-so          #+#    #+#             */
+/*   Updated: 2026/07/09 13:49:31 by dpaes-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
@@ -37,8 +49,8 @@ class PmergeMe
         void	vector_mergin_sort(size_t &numbers_per_pair,size_t &p_num);
         void	deque_mergin_sort(size_t &numbers_per_pair,size_t &p_num);
 
-        void use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend, std::vector<size_t> &main_id, std::vector<size_t> &pend_id, size_t &p_num);
-        void use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &main, std::deque<int> &pend, std::deque<size_t> &main_id, std::deque<size_t> &pend_id, size_t &p_num);
+        void use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend, std::vector<size_t> &main_id, std::vector<size_t> &pend_id);
+        void use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &main, std::deque<int> &pend, std::deque<size_t> &main_id, std::deque<size_t> &pend_id);
 
 
         size_t	binarysearch(std::vector<int> &main_chain,int to_compare,int n_per_pair,size_t right);

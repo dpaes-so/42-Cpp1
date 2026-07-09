@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 16:25:02 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/07/09 00:59:54 by finn             ###   ########.fr       */
+/*   Updated: 2026/07/09 13:44:22 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,12 @@ size_t PmergeMe::find_bound_id_deq(const std::deque<size_t> &main_id, size_t pen
 	return (std::string::npos);
 }
 
-void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &main, std::deque<int> &pend, std::deque<size_t> &main_id, std::deque<size_t> &pend_id, size_t &p_num)
+void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &main, std::deque<int> &pend, std::deque<size_t> &main_id, std::deque<size_t> &pend_id)
 {
 	std::vector<size_t> seq;
 	size_t	order = 0;
 	size_t	prev_order = 1;
 
-	(void)main;
-	(void)pend;
-	(void)p_num;
-	(void)numbers_per_pair;
 	size_t pend_pairs = pend.size() / numbers_per_pair + 1;
 	seq = jacobsthal(pend_pairs);
 	for (size_t i = 0; i < seq.size(); i++)
@@ -119,7 +115,6 @@ void	PmergeMe::use_jacobsthal_deq(size_t &numbers_per_pair, std::deque<int> &mai
 			else
 				right = bound_idx;
 			left = binarysearch_deq(main,pend[idx],numbers_per_pair,right);
-		
 			std::deque<int>::iterator pos = main.begin() + left * numbers_per_pair;
 			size_t first = idx - numbers_per_pair + 1;
 			size_t last = idx + 1;
@@ -161,7 +156,7 @@ void PmergeMe::deque_mergin_sort(size_t &numbers_per_pair, size_t &p_num)
 		}
 		id++;
 	}
-	use_jacobsthal_deq(numbers_per_pair,main,pend,main_id, pend_id,p_num);
+	use_jacobsthal_deq(numbers_per_pair,main,pend,main_id, pend_id);
 	for (size_t i = 0; i < main.size(); i++)
 		deq[i] = main[i];
 }
@@ -191,7 +186,7 @@ void PmergeMe::Pmergedeque()
 	deque_mergin();
 	// std::cout << "Deque: ";
 	// print_container(deq);
-	std::cout << std::endl;
+	// std::cout << std::endl;
 }
 //DIVIDING
 std::vector<size_t> PmergeMe::jacobsthal(size_t n)
@@ -267,15 +262,12 @@ size_t	PmergeMe::binarysearch(std::vector<int> &main_chain,int to_compare, int n
 	return (left);
 }
 
-void PmergeMe::use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend, std::vector<size_t> &main_id, std::vector<size_t> &pend_id, size_t &p_num){
+void PmergeMe::use_jacobsthal(size_t &numbers_per_pair, std::vector<int> &main, std::vector<int> &pend, std::vector<size_t> &main_id, std::vector<size_t> &pend_id)
+{
 	std::vector<size_t> seq;
 	size_t	order = 0;
 	size_t	prev_order = 1;
 	
-	(void)main;
-	(void)pend;
-	(void)p_num;
-	(void)numbers_per_pair;
 	size_t pend_pairs = pend.size() / numbers_per_pair + 1;
 	seq = jacobsthal(pend_pairs);
 	for(size_t i = 0; i < seq.size(); i++)
@@ -338,7 +330,7 @@ void PmergeMe::vector_mergin_sort(size_t &numbers_per_pair,size_t	&p_num)
 		}
 		id++;
 	}
-	use_jacobsthal(numbers_per_pair, main, pend, main_id, pend_id, p_num);
+	use_jacobsthal(numbers_per_pair, main, pend, main_id, pend_id);
 	for(size_t i = 0; i < main.size();i++)
 		vec[i] = main[i];
 }
@@ -364,8 +356,11 @@ void PmergeMe::vector_mergin()
 
 void PmergeMe::Pmergevector()
 {
+	std::cout << "Before: ";
+	print_container(vec);
+	std::cout << std::endl;
 	vector_mergin();
-	std::cout << "Vector: ";
+	std::cout << "After: ";
 	print_container(vec);
 	std::cout << std::endl;
 }
@@ -380,22 +375,6 @@ bool PmergeMe::parse_input(char *av[])
 	for (size_t i = 1; av[i]; i++)
 	{
 		s = av[i];
-		if (s.find_first_of("\t\n\v\f\r ") != std::string::npos)
-		{
-			std::istringstream ss(av[i]);
-			while (ss >> bigstring)
-			{
-				value = std::strtol(bigstring.c_str(), &end, 10);
-
-				if (*end != '\0' || value < 0 || value > INT_MAX)
-					return (false);
-				vec.push_back(static_cast<int>(value));
-				deq.push_back(static_cast<int>(value));
-			}
-			if (bigstring.empty())
-				return (false);
-			continue;
-		}
 		value = std::strtol(s.c_str(), &end, 10);
 		if (*end != '\0' || value < 0 || value > INT_MAX)
 			return (false);
