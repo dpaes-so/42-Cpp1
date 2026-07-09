@@ -6,12 +6,12 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 15:51:58 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/07/09 13:52:12 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/07/09 13:57:48 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BITCOINEXCHANGE_HPP
-#define BITCOINEXCHANGE_HPP
+#ifndef RPN_HPP
+#define RPN_HPP
 #include <iostream>
 #include <iomanip>
 #include <fstream>
